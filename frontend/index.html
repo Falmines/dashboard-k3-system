@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>K3 Safety Dashboard</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+    <div>
+      <h2>K3 SAFETY</h2>
+      <p>Safety First, Always</p>
+    </div>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+    <a href="insiden.html"><i class="fa-solid fa-helmet-safety"></i><span>Insiden</span><small>12</small></a>
+    <a href="observasi.html"><i class="fa-solid fa-clipboard-check"></i><span>Observasi & Inspeksi</span></a>
+    <a href="izin-kerja.html"><i class="fa-solid fa-calendar-check"></i><span>Izin Kerja</span></a>
+    <a href="training.html"><i class="fa-solid fa-graduation-cap"></i><span>Training K3</span></a>
+    <a href="apd.html"><i class="fa-solid fa-toolbox"></i><span>APD & Peralatan</span></a>
+    <a href="dokumen.html"><i class="fa-solid fa-file-lines"></i><span>Dokumen</span></a>
+    <a href="audit.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit</span></a>
+    <a href="tindakan-korektif.html" class="active"><i class="fa-solid fa-circle-check"></i><span>Tindakan Korektif</span><small class="orange">8</small></a>
+    <a href="pelaporan.html"><i class="fa-solid fa-chart-pie"></i><span>Pelaporan</span></a>
+    <a href="risiko.html"><i class="fa-solid fa-triangle-exclamation"></i><span>Manajemen Risiko</span></a>
+    <a href="pengguna.html"><i class="fa-solid fa-users"></i><span>Pengguna</span></a>
+    <a href="pengaturan.html"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+  </nav>
+
+  <div class="safety-card">
+    <h3>SAFETY STARTS WITH YOU</h3>
+    <p>Utamakan K3 dalam setiap pekerjaan.</p>
+    <div class="worker">👷‍♂️</div>
+  </div>
+</aside>
+
+<main class="main-content">
+
+  <header class="topbar">
+    <div>
+      <h1>Selamat pagi, Admin K3 👋</h1>
+      <p>Utamakan keselamatan, ciptakan zero accident</p>
+    </div>
+
+    <div class="top-info">
+      <div><i class="fa-regular fa-calendar"></i> Rabu, 15 Mei 2024</div>
+      <div><i class="fa-solid fa-sun"></i> 28°C Jakarta</div>
+      <div class="notif"><i class="fa-regular fa-bell"></i><span>5</span></div>
+      <div class="profile">👨‍💼 <b>Admin K3</b></div>
+    </div>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card green">
+      <div>
+        <p>Total Jam Kerja Aman</p>
+        <h2>1.25M <small>Jam</small></h2>
+        <span>↑ 12.5% dari bulan lalu</span>
+      </div>
+      <i class="fa-solid fa-shield-check"></i>
+    </div>
+
+    <div class="stat-card blue">
+      <div>
+        <p>Zero Accident</p>
+        <h2>45 <small>Hari</small></h2>
+        <span>Pertahankan! 💪</span>
+      </div>
+      <i class="fa-solid fa-award"></i>
+    </div>
+
+    <div class="stat-card yellow">
+      <div>
+        <p>Total Insiden</p>
+        <h2>12 <small>Insiden</small></h2>
+        <span>↓ 20% dari bulan lalu</span>
+      </div>
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+
+    <div class="stat-card red">
+      <div>
+        <p>Near Miss</p>
+        <h2>28 <small>Kasus</small></h2>
+        <span>↓ 6% dari bulan lalu</span>
+      </div>
+      <i class="fa-solid fa-eye"></i>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Ringkasan Insiden</h3>
+        <button>6 Bulan Terakhir</button>
+      </div>
+      <div class="donut-wrap">
+        <div class="donut"><span>Total<br><b>72</b><br>Insiden</span></div>
+        <ul class="legend">
+          <li><b class="red-dot"></b> First Aid Case 28</li>
+          <li><b class="orange-dot"></b> Near Miss 28</li>
+          <li><b class="green-dot"></b> Property Damage 10</li>
+          <li><b class="blue-dot"></b> Lost Time Injury 6</li>
+        </ul>
+      </div>
+      <a class="card-link">Lihat Semua Insiden →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Trend Insiden</h3>
+        <button>6 Bulan Terakhir</button>
+      </div>
+      <div class="chart-box">
+        <div style="height:75%"></div>
+        <div style="height:45%"></div>
+        <div style="height:60%"></div>
+        <div style="height:50%"></div>
+        <div style="height:35%"></div>
+        <div style="height:25%"></div>
+      </div>
+      <a class="card-link">Lihat Laporan Lengkap →</a>
+    </div>
+
+    <div class="card">
+      <h3>Kepatuhan Inspeksi</h3>
+      <div class="progress-wrap">
+        <div class="progress-circle">92%<span>Selesai</span></div>
+        <div class="progress-info">
+          <p>Target Bulanan <b>100%</b></p>
+          <p>Selesai <b class="green-text">92%</b></p>
+          <p>Belum Selesai <b class="red-text">8%</b></p>
+        </div>
+      </div>
+      <a class="card-link">Lihat Detail Inspeksi →</a>
+    </div>
+
+    <div class="card">
+      <h3>Aktivitas Terbaru</h3>
+      <div class="activity">
+        <p><i class="fa-solid fa-triangle-exclamation danger"></i> Insiden baru dilaporkan <span>10 menit lalu</span></p>
+        <p><i class="fa-solid fa-circle-check success"></i> Inspeksi harian selesai <span>1 jam lalu</span></p>
+        <p><i class="fa-solid fa-file-signature warn"></i> Izin kerja disetujui <span>2 jam lalu</span></p>
+        <p><i class="fa-solid fa-briefcase info"></i> Training K3 selesai <span>3 jam lalu</span></p>
+      </div>
+      <a class="card-link">Lihat Semua Aktivitas →</a>
+    </div>
+
+    <div class="card">
+      <h3>Top 5 Risiko Tertinggi</h3>
+      <table>
+        <tr><th>Risiko</th><th>Level</th><th>Kategori</th></tr>
+        <tr><td>Terpeleset</td><td><span class="badge high">Tinggi</span></td><td>Produksi</td></tr>
+        <tr><td>Tertimpa Benda</td><td><span class="badge high">Tinggi</span></td><td>Konstruksi</td></tr>
+        <tr><td>Kontak Listrik</td><td><span class="badge med">Sedang</span></td><td>Maintenance</td></tr>
+        <tr><td>Paparan Kimia</td><td><span class="badge med">Sedang</span></td><td>Lab</td></tr>
+      </table>
+      <a class="card-link">Lihat Register Risiko →</a>
+    </div>
+
+    <div class="card wide">
+      <div class="card-head">
+        <h3>Distribusi Insiden per Lokasi</h3>
+        <button>6 Bulan Terakhir</button>
+      </div>
+      <div class="map-box">
+        <div>Warehouse<br><b>8 Insiden</b></div>
+        <div>Produksi<br><b>32 Insiden</b></div>
+        <div>Kantor<br><b>5 Insiden</b></div>
+        <div>Workshop<br><b>7 Insiden</b></div>
+      </div>
+      <a class="card-link">Lihat Peta Lokasi →</a>
+    </div>
+
+  </section>
+
+  <footer class="footer-banner">
+    <div>🛡️ <b>Budayakan K3, Lindungi Diri, Lindungi Sesama</b></div>
+    <div>👥 Ingat! Setiap tindakan aman menciptakan lingkungan kerja lebih baik.</div>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

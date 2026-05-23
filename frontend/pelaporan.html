@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K3 Safety - Pelaporan</title>
+  <link rel="stylesheet" href="pelaporan.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><i class="fa-solid fa-gear"></i></div>
+    <div>
+      <h2>K3 SAFETY</h2>
+      <p>Safety First, Always</p>
+    </div>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+    <a href="insiden.html"><i class="fa-solid fa-helmet-safety"></i><span>Insiden</span><small>12</small></a>
+    <a href="observasi.html"><i class="fa-solid fa-clipboard-check"></i><span>Observasi & Inspeksi</span></a>
+    <a href="izin-kerja.html"><i class="fa-solid fa-calendar-check"></i><span>Izin Kerja</span></a>
+    <a href="training.html"><i class="fa-solid fa-graduation-cap"></i><span>Training K3</span></a>
+    <a href="apd.html"><i class="fa-solid fa-toolbox"></i><span>APD & Peralatan</span></a>
+    <a href="dokumen.html"><i class="fa-solid fa-file-lines"></i><span>Dokumen</span></a>
+    <a href="audit.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit</span></a>
+    <a href="tindakan-korektif.html"><i class="fa-solid fa-circle-check"></i><span>Tindakan Korektif</span><small class="orange">8</small></a>
+    <a href="pelaporan.html" class="active"><i class="fa-solid fa-chart-pie"></i><span>Pelaporan</span></a>
+    <a href="risiko.html"><i class="fa-solid fa-triangle-exclamation"></i><span>Manajemen Risiko</span></a>
+    <a href="pengguna.html"><i class="fa-solid fa-users"></i><span>Pengguna</span></a>
+    <a href="pengaturan.html"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+  </nav>
+
+  <div class="safety-card">
+    <h3>SAFETY<br>STARTS<br>WITH YOU</h3>
+    <p>Utamakan K3 dalam setiap pekerjaan demi masa depan yang lebih baik.</p>
+    <div class="worker">👷‍♂️</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div>
+      <h2>Selamat pagi, Admin K3 👋</h2>
+      <p>Utamakan keselamatan, ciptakan zero accident</p>
+    </div>
+
+    <div class="top-info">
+      <div><i class="fa-regular fa-calendar"></i> Rabu, 15 Mei 2024</div>
+      <div><i class="fa-solid fa-sun"></i> 28°C</div>
+      <div><i class="fa-solid fa-location-dot"></i> Jakarta, Indonesia</div>
+      <div class="bell"><i class="fa-regular fa-bell"></i><span>5</span></div>
+      <div class="profile">👨‍💼 <b>Admin K3</b></div>
+    </div>
+  </header>
+
+  <section class="page-title">
+    <div>
+      <h1>Pelaporan</h1>
+      <p>Dashboard <i class="fa-solid fa-chevron-right"></i> Pelaporan</p>
+    </div>
+
+    <div class="title-actions">
+      <button class="btn-primary"><i class="fa-solid fa-plus"></i> Buat Laporan Baru</button>
+      <button class="btn-light"><i class="fa-solid fa-download"></i> Unduh Laporan</button>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div>
+        <p>Total Laporan</p>
+        <h2 class="blue">156</h2>
+        <span>Semua laporan</span>
+      </div>
+      <i class="fa-solid fa-file-lines icon blue-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Insiden</p>
+        <h2 class="red">42</h2>
+        <span>26.9% dari total</span>
+      </div>
+      <i class="fa-solid fa-triangle-exclamation icon red-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Observasi</p>
+        <h2 class="green">58</h2>
+        <span>37.2% dari total</span>
+      </div>
+      <i class="fa-solid fa-eye icon green-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Near Miss</p>
+        <h2 class="orange-text">36</h2>
+        <span>23.1% dari total</span>
+      </div>
+      <i class="fa-solid fa-person-running icon orange-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Selesai Ditindaklanjuti</p>
+        <h2 class="purple">98</h2>
+        <span>62.8% dari total</span>
+      </div>
+      <i class="fa-solid fa-circle-check icon purple-bg"></i>
+    </div>
+  </section>
+
+  <section class="filter">
+    <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari laporan...</div>
+    <button>Semua Jenis Laporan <i class="fa-solid fa-chevron-down"></i></button>
+    <button>Semua Lokasi <i class="fa-solid fa-chevron-down"></i></button>
+    <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
+    <button>01/05/2024 - 15/05/2024 <i class="fa-regular fa-calendar"></i></button>
+    <button><i class="fa-solid fa-rotate-right"></i> Reset</button>
+  </section>
+
+  <section class="layout">
+
+    <div class="left">
+
+      <div class="chart-card">
+        <div class="card-head row">
+          <div>
+            <h3>Tren Laporan</h3>
+            <p>Jumlah laporan berdasarkan waktu</p>
+          </div>
+          <div class="legend-inline">
+            <span><b class="red-dot"></b>Insiden</span>
+            <span><b class="green-dot"></b>Observasi</span>
+            <span><b class="yellow-dot"></b>Near Miss</span>
+            <span><b class="purple-dot"></b>Selesai</span>
+          </div>
+        </div>
+
+        <div class="fake-chart">
+          <div class="chart-tooltip">
+            <b>Mei</b>
+            <p><span class="red-dot"></span> Insiden 14</p>
+            <p><span class="green-dot"></span> Observasi 18</p>
+            <p><span class="yellow-dot"></span> Near Miss 10</p>
+            <p><span class="purple-dot"></span> Selesai 16</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="card-head">
+          <h3>Daftar Laporan Terbaru</h3>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>ID Laporan</th>
+              <th>Jenis Laporan</th>
+              <th>Judul / Deskripsi</th>
+              <th>Lokasi</th>
+              <th>Pelapor</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>RPT-2024-156</td>
+              <td><span class="type red-type"><i class="fa-solid fa-triangle-exclamation"></i> Insiden</span></td>
+              <td>Karyawan terpeleset di area produksi</td>
+              <td>Area Produksi</td>
+              <td>Budi Santoso</td>
+              <td>15 Mei 2024</td>
+              <td><span class="status proses">Dalam Proses</span></td>
+              <td>👁 ⋯</td>
+            </tr>
+
+            <tr>
+              <td>2</td>
+              <td>RPT-2024-155</td>
+              <td><span class="type green-type"><i class="fa-solid fa-eye"></i> Observasi</span></td>
+              <td>Rambu keselamatan kurang jelas</td>
+              <td>Area Gudang</td>
+              <td>Siti Aisyah</td>
+              <td>15 Mei 2024</td>
+              <td><span class="status selesai">Selesai</span></td>
+              <td>👁 ⋯</td>
+            </tr>
+
+            <tr>
+              <td>3</td>
+              <td>RPT-2024-154</td>
+              <td><span class="type orange-type"><i class="fa-solid fa-person-running"></i> Near Miss</span></td>
+              <td>Hampir tertimpa material</td>
+              <td>Area Proyek</td>
+              <td>Andi Wijaya</td>
+              <td>14 Mei 2024</td>
+              <td><span class="status belum">Belum Ditindaklanjuti</span></td>
+              <td>👁 ⋯</td>
+            </tr>
+
+            <tr>
+              <td>4</td>
+              <td>RPT-2024-153</td>
+              <td><span class="type red-type"><i class="fa-solid fa-triangle-exclamation"></i> Insiden</span></td>
+              <td>Kebocoran pipa pada sambungan</td>
+              <td>Area Utilitas</td>
+              <td>Dewi Lestari</td>
+              <td>14 Mei 2024</td>
+              <td><span class="status proses">Dalam Proses</span></td>
+              <td>👁 ⋯</td>
+            </tr>
+
+            <tr>
+              <td>5</td>
+              <td>RPT-2024-152</td>
+              <td><span class="type green-type"><i class="fa-solid fa-eye"></i> Observasi</span></td>
+              <td>Penggunaan APD tidak lengkap</td>
+              <td>Area Workshop</td>
+              <td>Rudi Hermawan</td>
+              <td>13 Mei 2024</td>
+              <td><span class="status selesai">Selesai</span></td>
+              <td>👁 ⋯</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span>Tampilkan</span>
+          <button>10</button>
+          <span>per halaman</span>
+          <div>
+            <button>&lt;</button>
+            <button class="active-page">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>16</button>
+            <button>&gt;</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <aside class="right">
+
+      <div class="side-card">
+        <h3>Ringkasan Status Laporan</h3>
+        <div class="donut"><span>156<small>Total</small></span></div>
+        <p><b class="green-dot"></b> Selesai <strong>98 (62.8%)</strong></p>
+        <p><b class="yellow-dot"></b> Dalam Proses <strong>34 (21.8%)</strong></p>
+        <p><b class="red-dot"></b> Belum Ditindaklanjuti <strong>20 (12.8%)</strong></p>
+        <p><b class="purple-dot"></b> Ditolak <strong>4 (2.6%)</strong></p>
+      </div>
+
+      <div class="side-card">
+        <h3>Laporan Terbaru</h3>
+
+        <div class="latest-row">
+          <i class="fa-solid fa-triangle-exclamation danger"></i>
+          <p><b>RPT-2024-156</b><br><small>Karyawan terpeleset di area produksi</small></p>
+          <span>15 Mei 2024</span>
+          <em>Dalam Proses</em>
+        </div>
+
+        <div class="latest-row">
+          <i class="fa-solid fa-eye success"></i>
+          <p><b>RPT-2024-155</b><br><small>Rambu keselamatan kurang jelas</small></p>
+          <span>15 Mei 2024</span>
+          <em class="done">Selesai</em>
+        </div>
+
+        <div class="latest-row">
+          <i class="fa-solid fa-person-running warning"></i>
+          <p><b>RPT-2024-154</b><br><small>Hampir tertimpa material</small></p>
+          <span>14 Mei 2024</span>
+          <em class="bad">Belum</em>
+        </div>
+
+        <a class="view-all">Lihat Semua Laporan →</a>
+      </div>
+
+      <div class="side-card">
+        <h3>Distribusi Laporan Berdasarkan Kategori</h3>
+
+        <div class="bar-row"><span>Keselamatan Kerja</span><div><b style="width:100%"></b></div><strong>68</strong></div>
+        <div class="bar-row"><span>Lingkungan Kerja</span><div><b style="width:50%"></b></div><strong>34</strong></div>
+        <div class="bar-row"><span>Fasilitas & Peralatan</span><div><b style="width:41%"></b></div><strong>28</strong></div>
+        <div class="bar-row"><span>Perilaku / Human Error</span><div><b style="width:26%"></b></div><strong>18</strong></div>
+        <div class="bar-row"><span>Lainnya</span><div><b style="width:12%"></b></div><strong>8</strong></div>
+      </div>
+
+    </aside>
+
+  </section>
+
+</main>
+
+</body>
+</html>

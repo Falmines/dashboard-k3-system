@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K3 Safety - Tindakan Korektif</title>
+  <link rel="stylesheet" href="tindakan-korektif.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon"><i class="fa-solid fa-gear"></i></div>
+    <div>
+      <h2>K3 SAFETY</h2>
+      <p>Safety First, Always</p>
+    </div>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="index.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+    <a href="insiden.html"><i class="fa-solid fa-helmet-safety"></i><span>Insiden</span><small>12</small></a>
+    <a href="observasi.html"><i class="fa-solid fa-clipboard-check"></i><span>Observasi & Inspeksi</span></a>
+    <a href="izin-kerja.html"><i class="fa-solid fa-calendar-check"></i><span>Izin Kerja</span></a>
+    <a href="training.html"><i class="fa-solid fa-graduation-cap"></i><span>Training K3</span></a>
+    <a href="apd.html"><i class="fa-solid fa-toolbox"></i><span>APD & Peralatan</span></a>
+    <a href="dokumen.html"><i class="fa-solid fa-file-lines"></i><span>Dokumen</span></a>
+    <a href="audit.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit</span></a>
+    <a href="tindakan.html" class="active"><i class="fa-solid fa-circle-check"></i><span>Tindakan Korektif</span><small class="orange">8</small></a>
+    <a href="pelaporan.html"><i class="fa-solid fa-chart-pie"></i><span>Pelaporan</span></a>
+    <a href="risiko.html"><i class="fa-solid fa-triangle-exclamation"></i><span>Manajemen Risiko</span></a>
+    <a href="pengguna.html"><i class="fa-solid fa-users"></i><span>Pengguna</span></a>
+    <a href="pengaturan.html"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
+  </nav>
+
+  <div class="safety-card">
+    <h3>SAFETY<br>STARTS<br>WITH YOU</h3>
+    <p>Utamakan K3 dalam setiap pekerjaan demi masa depan yang lebih baik.</p>
+    <div class="worker">👷‍♂️</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div>
+      <h2>Selamat pagi, Admin K3 👋</h2>
+      <p>Utamakan keselamatan, ciptakan zero accident</p>
+    </div>
+
+    <div class="top-info">
+      <div><i class="fa-regular fa-calendar"></i> Rabu, 15 Mei 2024</div>
+      <div><i class="fa-solid fa-sun"></i> 28°C</div>
+      <div><i class="fa-solid fa-location-dot"></i> Jakarta, Indonesia</div>
+      <div class="bell"><i class="fa-regular fa-bell"></i><span>5</span></div>
+      <div class="profile">👨‍💼 <b>Admin K3</b></div>
+    </div>
+  </header>
+
+  <section class="page-title">
+    <div>
+      <h1>Tindakan Korektif</h1>
+      <p>Dashboard <i class="fa-solid fa-chevron-right"></i> Tindakan Korektif</p>
+    </div>
+    <button><i class="fa-solid fa-plus"></i> Buat Tindakan Korektif</button>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div>
+        <p>Total Tindakan</p>
+        <h2 class="blue">78</h2>
+        <span>Semua tindakan</span>
+      </div>
+      <i class="fa-solid fa-clipboard-list icon blue-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Terbuka</p>
+        <h2 class="red">23</h2>
+        <span>Perlu ditindaklanjuti</span>
+      </div>
+      <i class="fa-solid fa-triangle-exclamation icon red-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Dalam Proses</p>
+        <h2 class="orange-text">31</h2>
+        <span>Sedang dikerjakan</span>
+      </div>
+      <i class="fa-solid fa-clock icon orange-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Selesai</p>
+        <h2 class="green">20</h2>
+        <span>Telah diselesaikan</span>
+      </div>
+      <i class="fa-solid fa-circle-check icon purple-bg"></i>
+    </div>
+
+    <div class="stat">
+      <div>
+        <p>Terlambat</p>
+        <h2 class="purple">4</h2>
+        <span>Melewati tenggat</span>
+      </div>
+      <i class="fa-solid fa-clock icon purple-bg"></i>
+    </div>
+  </section>
+
+  <section class="filter">
+    <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari tindakan korektif...</div>
+    <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
+    <button>Semua Prioritas <i class="fa-solid fa-chevron-down"></i></button>
+    <button>Semua Sumber <i class="fa-solid fa-chevron-down"></i></button>
+    <button>01/05/2024 - 15/05/2024 <i class="fa-regular fa-calendar"></i></button>
+    <button><i class="fa-solid fa-rotate-right"></i> Reset</button>
+  </section>
+
+  <section class="layout">
+
+    <div class="left">
+      <div class="table-card">
+        <div class="card-head">
+          <h3>Daftar Tindakan Korektif</h3>
+          <p>Menampilkan 1 - 10 dari 78 data</p>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>ID Tindakan</th>
+              <th>Sumber</th>
+              <th>Deskripsi Masalah</th>
+              <th>Prioritas</th>
+              <th>Penanggung Jawab</th>
+              <th>Tenggat</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>CA-2024-078</td><td>Observasi</td><td>Area kerja kotor dan tidak rapi</td><td><span class="priority high">High</span></td><td>Budi Santoso</td><td>15 Mei 2024</td><td><span class="status open">Terbuka</span></td><td>👁 ⋯</td></tr>
+            <tr><td>2</td><td>CA-2024-077</td><td>Insiden</td><td>APD tidak digunakan dengan benar</td><td><span class="priority high">High</span></td><td>Siti Aisyah</td><td>16 Mei 2024</td><td><span class="status progress">Dalam Proses</span></td><td>👁 ⋯</td></tr>
+            <tr><td>3</td><td>CA-2024-076</td><td>Audit</td><td>Rambu keselamatan kurang jelas</td><td><span class="priority medium">Medium</span></td><td>Andi Wijaya</td><td>18 Mei 2024</td><td><span class="status progress">Dalam Proses</span></td><td>👁 ⋯</td></tr>
+            <tr><td>4</td><td>CA-2024-075</td><td>Inspeksi</td><td>Penyimpanan bahan kimia tidak sesuai</td><td><span class="priority high">High</span></td><td>Dewi Lestari</td><td>14 Mei 2024<br><b class="late-text">(Terlambat)</b></td><td><span class="status late">Terlambat</span></td><td>👁 ⋯</td></tr>
+            <tr><td>5</td><td>CA-2024-074</td><td>Observasi</td><td>Penerangan area kerja kurang</td><td><span class="priority low">Low</span></td><td>Rudi Hermawan</td><td>20 Mei 2024</td><td><span class="status open">Terbuka</span></td><td>👁 ⋯</td></tr>
+            <tr><td>6</td><td>CA-2024-073</td><td>Insiden</td><td>Lantai licin di area produksi</td><td><span class="priority high">High</span></td><td>Agus Setiawan</td><td>13 Mei 2024</td><td><span class="status done">Selesai</span></td><td>👁 ⋯</td></tr>
+            <tr><td>7</td><td>CA-2024-072</td><td>Audit</td><td>Dokumen K3 tidak lengkap</td><td><span class="priority medium">Medium</span></td><td>Nina Karlina</td><td>12 Mei 2024</td><td><span class="status done">Selesai</span></td><td>👁 ⋯</td></tr>
+            <tr><td>8</td><td>CA-2024-071</td><td>Observasi</td><td>Fire extinguisher terhalang barang</td><td><span class="priority high">High</span></td><td>Fajar Nugroho</td><td>17 Mei 2024</td><td><span class="status progress">Dalam Proses</span></td><td>👁 ⋯</td></tr>
+            <tr><td>9</td><td>CA-2024-070</td><td>Inspeksi</td><td>Guarding mesin tidak terpasang</td><td><span class="priority high">High</span></td><td>Eko Prasetyo</td><td>19 Mei 2024</td><td><span class="status open">Terbuka</span></td><td>👁 ⋯</td></tr>
+            <tr><td>10</td><td>CA-2024-069</td><td>Insiden</td><td>Tumpahan oli tidak segera dibersihkan</td><td><span class="priority medium">Medium</span></td><td>Maya Putri</td><td>11 Mei 2024<br><b class="late-text">(Terlambat)</b></td><td><span class="status late">Terlambat</span></td><td>👁 ⋯</td></tr>
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span>Tampilkan</span>
+          <button>10</button>
+          <span>per halaman</span>
+          <div>
+            <button>&lt;</button>
+            <button class="active-page">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>...</button>
+            <button>8</button>
+            <button>&gt;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="right">
+      <div class="side-card">
+        <h3>Ringkasan Status</h3>
+        <div class="donut"><span>78<small>Total</small></span></div>
+        <p><b class="red-dot"></b> Terbuka <strong>23 (29.5%)</strong></p>
+        <p><b class="yellow-dot"></b> Dalam Proses <strong>31 (39.7%)</strong></p>
+        <p><b class="green-dot"></b> Selesai <strong>20 (25.6%)</strong></p>
+        <p><b class="purple-dot"></b> Terlambat <strong>4 (5.1%)</strong></p>
+      </div>
+
+      <div class="side-card">
+        <h3>Tindakan Berdasarkan Prioritas</h3>
+        <div class="bar-row"><span>High</span><div><b style="width:100%"></b></div><strong>36</strong></div>
+        <div class="bar-row"><span>Medium</span><div><b style="width:78%"></b></div><strong>28</strong></div>
+        <div class="bar-row"><span>Low</span><div><b style="width:39%"></b></div><strong>14</strong></div>
+      </div>
+
+      <div class="side-card">
+        <h3>Tindakan Terlambat</h3>
+        <div class="late-row"><i class="fa-regular fa-clock"></i><p><b>CA-2024-075</b><br><small>Penyimpanan bahan kimia tidak sesuai</small></p><span>14 Mei 2024</span><a>Lihat</a></div>
+        <div class="late-row"><i class="fa-regular fa-clock"></i><p><b>CA-2024-069</b><br><small>Tumpahan oli tidak segera dibersihkan</small></p><span>11 Mei 2024</span><a>Lihat</a></div>
+        <div class="late-row"><i class="fa-regular fa-clock"></i><p><b>CA-2024-066</b><br><small>Kalibrasi alat ukur belum dilakukan</small></p><span>10 Mei 2024</span><a>Lihat</a></div>
+        <a class="view-all">Lihat Semua Tindakan Terlambat →</a>
+      </div>
+
+      <div class="side-card">
+        <h3>Sumber Tindakan Korektif</h3>
+        <div class="source-grid">
+          <div><i class="fa-solid fa-clipboard-check blue"></i><b>28</b><span>Observasi</span></div>
+          <div><i class="fa-solid fa-triangle-exclamation red"></i><b>22</b><span>Insiden</span></div>
+          <div><i class="fa-solid fa-clipboard-list green"></i><b>16</b><span>Audit</span></div>
+          <div><i class="fa-solid fa-magnifying-glass blue"></i><b>12</b><span>Inspeksi</span></div>
+        </div>
+      </div>
+    </aside>
+
+  </section>
+
+</main>
+
+</body>
+</html>
