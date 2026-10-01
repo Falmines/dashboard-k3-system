@@ -1,0 +1,11 @@
+const express=require("express");const cors=require("cors");
+const app=express();app.use(cors());app.use(express.json());
+app.get("/api/health",(req,res)=>res.json({success:true,message:"K3 Safety API aktif"}));
+app.use("/api/auth",require("./routes/authRoutes"));
+app.use("/api/users",require("./routes/userRoutes"));
+app.use("/api/incidents",require("./routes/incidentRoutes"));
+app.use("/api/observations",require("./routes/observationRoutes"));
+app.use("/api/near-miss",require("./routes/nearMissRoutes"));
+app.use("/api/dashboard",require("./routes/dashboardRoutes"));
+app.use((req,res)=>res.status(404).json({success:false,message:"Endpoint tidak ditemukan"}));
+app.use(require("./middleware/errorMiddleware"));module.exports=app;
