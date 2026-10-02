@@ -1,0 +1,335 @@
+# Migrasi Node.js, PostgreSQL, dan Push GitHub
+
+PT. JASIL • Dashboard K3 Safety • Git Bash Windows
+
+## 1. Ruang lingkup dan kondisi proyek
+
+“Migrasi” pada panduan ini meliputi pemasangan dependency Node.js pada komputer tujuan, integrasi Register ke backend utama, backup/restore PostgreSQL, dan sinkronisasi branch master dengan GitHub. Bukan migrasi otomatis seluruh aplikasi menjadi framework baru.
+
+File terbaru menunjukkan dua arsitektur berbeda: Dashboard utama memiliki login/JWT dan menu K3; Register mandiri memiliki server sendiri. Jangan menimpa server.js atau package.json utama dengan versi Register. Folder src, frontend lengkap, serta skema database live tidak disertakan pada lampiran terbaru. Karena itu panduan menyediakan langkah integrasi, bukan mengklaim seluruh backend telah diperbaiki.
+
+| Lampiran | Temuan | Tindakan |
+|---|---|---|
+| README(1).md | Konflik Git belum selesai | Gabungkan isi yang relevan lalu tandai resolved |
+| package(2).json | Package pt-jasil-register, script start/test | Pertahankan dalam modul mandiri atau gabungkan dependency ke backend utama |
+| server(2).js | Membutuhkan src/mount-register dan public | Gunakan hanya dengan paket Register lengkap |
+| check-database(3).sql | Query tabel reports | Bukan skema database atau migrasi Register |
+| .env(2) | Konfigurasi lokal | Jangan push; isi contoh konfigurasi secara lokal |
+
+## 2. Persiapan Windows dan Git Bash
+
+Instal Git for Windows, Node.js LTS yang masih didukung, dan PostgreSQL beserta command-line tools. Package Register mensyaratkan Node >=20, tetapi itu batas kompatibilitas package, bukan jaminan dukungan versi. Untuk panduan ini gunakan LTS yang masih didukung dengan major minimal 22.
+
+```bash
+node --version
+npm --version
+git --version
+psql --version
+pg_dump --version
+```
+
+Jika PostgreSQL belum ada di PATH, tambahkan direktori bin instalasi Anda pada sesi Git Bash. Contoh berikut memakai versi 17; ubah sesuai versi terpasang:
+
+```bash
+export PATH="/c/Program Files/PostgreSQL/17/bin:$PATH"
+```
+
+Gunakan pg_dump yang kompatibel dengan versi server sumber; jangan memakai pg_dump major lebih tua untuk server lebih baru. Database tujuan sebaiknya versi sama atau lebih baru, dengan extension yang dibutuhkan tersedia.
+
+Masuk ke proyek:
+
+```bash
+cd "$HOME/Documents/Desktop/ORDER VALWEBDIGITAL/DASHBOARDK3SAFETY"
+git status
+git branch --show-current
+```
+
+Lokasi Desktop Anda mungkin berbeda. Selalu beri tanda kutip pada path dengan spasi.
+
+## 3. Selesaikan konflik yang ditemukan
+
+README lampiran mengandung penanda konflik. Periksa repo sebenarnya; keberadaan penanda pada file tidak otomatis membuktikan rebase masih aktif.
+
+```bash
+git status
+git diff --name-only --diff-filter=U
+git grep -n -I -E '^(<<<<<<< |=======$|>>>>>>> )' -- .
+```
+
+Perintah grep terakhir keluar dengan status 1 jika tidak ada kecocokan; ini normal. Periksa setiap file yang ditampilkan. Simpan teks akhir yang diperlukan dan hapus penanda konflik. Jangan menghapus seluruh satu sisi tanpa memeriksa isinya. templates/README-resolved.md adalah usulan gabungan untuk README; sesuaikan dengan struktur aktual.
+
+Jika konflik juga terjadi pada package.json, gabungkan dependency dan scripts Dashboard + Register, pertahankan JSON valid. Jika package-lock.json konflik, selesaikan package.json terlebih dahulu lalu jalankan npm install di direktori backend untuk meregenerasi lockfile; periksa perubahan sebelum stage.
+
+```bash
+# Sesuaikan path file yang benar-benar telah diperbaiki
+git add README.md
+# HANYA bila git status menyatakan rebase berlangsung:
+git rebase --continue
+```
+
+Ulangi jika Git berhenti pada konflik berikutnya. Bila status menyatakan merge berlangsung, gunakan `git merge --continue`. Jika tidak ada rebase/merge aktif, commit perbaikan seperti perubahan biasa. Jangan menjalankan --continue secara acak.
+
+Untuk membatalkan rebase aktif:
+
+```bash
+git rebase --abort
+```
+
+Jika editor Vim muncul untuk pesan commit, tekan Esc, ketik :wq, lalu Enter untuk menyimpan dan keluar.
+
+## 4. Instalasi atau pemindahan backend Node.js
+
+Pada komputer tujuan, ambil source dari repository yang telah tersinkronisasi atau salin folder proyek lengkap tanpa node_modules. Jangan mengandalkan file server.js saja: semua file require/import harus ikut tersedia.
+
+Untuk instalasi baru dari GitHub:
+
+```bash
+git clone --branch master https://github.com/Falmines/dashboard-k3-system.git dashboard-k3-system
+cd dashboard-k3-system
+cd backend
+```
+
+Untuk proyek lokal yang sudah ada, jangan clone menimpa folder tersebut. Masuk ke backend yang benar. Periksa package sebelum instalasi:
+
+```bash
+node -p 'require("./package.json").name'
+npm run
+```
+
+Gunakan `npm ci` jika package-lock.json tersedia dan sinkron dengan package.json. Jika belum ada lockfile, gunakan `npm install`. Bila npm ci menolak lockfile tidak sinkron, periksa package yang diinginkan lalu jalankan npm install; jangan menyembunyikan kegagalan secara otomatis.
+
+Alternatif helper dari root proyek (ganti lokasi paket dokumentasi):
+
+```bash
+bash /c/path/K3-Node-Migration-Push/scripts/setup-node.sh "$PWD/backend"
+```
+
+Script tidak menimpa .env existing. Jika setup manual:
+
+```bash
+cd backend
+if [ ! -f .env ]; then cp .env.example .env; fi
+```
+
+Isi DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD pada .env. Backend login juga membutuhkan JWT_SECRET. Buat secret lokal:
+
+```bash
+node -e 'console.log(require("node:crypto").randomBytes(48).toString("hex"))'
+```
+
+Salin hasilnya ke .env lokal; jangan masukkan ke dokumentasi/commit. Jangan memakai `source .env`: format dotenv bukan skrip shell. Untuk backend utama, pertahankan dependency existing, termasuk jsonwebtoken/cors jika dipakai kode. Untuk error Cannot find module jsonwebtoken, jalankan `npm install jsonwebtoken` di folder package backend utama dan commit package.json + lockfile yang diperbarui.
+
+## 5. Integrasi Register tanpa mengganti backend utama
+
+Paket Register lengkap harus memiliki src/mount-register.js, register-controller.js, validation.js, rate-limit.js, dan public. Lampiran server/package saja tidak cukup. Gunakan ZIP PT-JASIL-Register yang telah diberikan.
+
+Struktur integrasi yang disarankan:
+
+```text
+backend/
+  server.js                 (milik Dashboard)
+  package.json              (milik Dashboard)
+  src/
+    app.js                  (milik Dashboard)
+    config/database.js      (pool existing)
+    jasil-register/
+      mount-register.js
+      register-controller.js
+      validation.js
+      rate-limit.js
+frontend/
+  register.html
+  register.css
+  register.js
+  config.js
+```
+
+Salin isi src modul ke backend/src/jasil-register. Di backend/src/app.js, setelah express.json() dan sebelum autentikasi global/404:
+
+```js
+const pool = require('./config/database');
+require('./jasil-register/mount-register')(app, pool);
+```
+
+Jika pool sudah dideklarasikan, gunakan variabel tersebut; jangan deklarasikan dua kali. Sesuaikan path bila konfigurasi bernama db.js. Pertahankan satu app.listen di server utama. Jangan menimpa authRoutes.js atau route login.
+
+Pastikan bcrypt tersedia pada backend utama. Tambahkan tautan register pada halaman login. Sesuaikan config.js: registerUrl menuju /api/auth/register backend, loginUrl menuju halaman login yang benar. Bila frontend berbeda origin, izinkan origin tersebut pada konfigurasi CORS existing.
+
+Jika memilih modul mandiri, simpan seluruh paket terpisah dan gunakan PORT=5001; Dashboard utama dapat tetap memakai port 5000. Server Register terbaru tidak menyediakan /api/health atau endpoint login; jangan menganggap dokumentasi health endpoint lama berlaku untuk modul ini.
+
+## 6. Backup dan migrasi PostgreSQL existing
+
+Backup dilakukan sebelum mengubah schema. Jangan menjalankan skrip pembuatan database demo pada database produksi/existing. Tetapkan koneksi untuk CLI melalui variabel PostgreSQL, terpisah dari .env Node:
+
+```bash
+export PGHOST=localhost
+export PGPORT=5432
+export PGUSER=postgres
+export PGDATABASE=k3_safety
+bash /c/path/K3-Node-Migration-Push/scripts/backup-db.sh "$HOME/K3-backups"
+```
+
+Password diminta oleh pg_dump. Backup berformat custom dan disimpan di luar repository. Backup database tidak mencakup seluruh role global PostgreSQL maupun file upload eksternal; siapkan role pemilik/extension pada server tujuan dan salin file upload secara terpisah bila aplikasi memakainya.
+
+Uji restore ke database BARU, jangan menimpa database utama:
+
+```bash
+createdb -W k3_safety_restore_test
+pg_restore -W --exit-on-error --single-transaction --no-owner --no-acl \
+  --dbname=k3_safety_restore_test "$HOME/K3-backups/NAMA_BACKUP.dump"
+```
+
+Ganti NAMA_BACKUP dengan file hasil backup. --no-owner/--no-acl membuat kepemilikan/izin tidak disalin seperti aslinya; terapkan grant yang diperlukan untuk user aplikasi sebelum digunakan. Jika database tujuan sudah berisi objek, buat database baru yang kosong; panduan tidak menggunakan DROP atau --clean.
+
+Untuk migrasi Register pada database existing:
+
+```bash
+psql -W -v ON_ERROR_STOP=1 -f /c/path/K3-Node-Migration-Push/sql/00-precheck.sql
+psql -W -v ON_ERROR_STOP=1 -f /c/path/K3-Node-Migration-Push/sql/01-register-existing.sql
+```
+
+Tinjau hasil precheck SEBELUM menjalankan file kedua. Jika ditemukan duplikat username/email, selesaikan berdasarkan akun yang benar; jangan hapus akun secara otomatis. Migrasi menambahkan role Staff jika belum ada dan indeks unik lower(username)/lower(email) dalam transaksi. Migrasi membutuhkan tabel roles/users existing yang sesuai dan UNIQUE pada roles.name. Ia tidak membuat seluruh tabel Dashboard. DDL indeks dapat mengunci penulisan; jadwalkan saat aktivitas rendah untuk database besar.
+
+Untuk pemindahan ke komputer/server lain: restore backup ke database tujuan kosong, arahkan .env ke tujuan, uji koneksi dan login, baru alihkan aplikasi. Jangan mengubah koneksi utama sebelum validasi selesai.
+
+## 7. Jalankan dan uji
+
+```bash
+# Di direktori package backend yang benar
+npm run
+npm start
+```
+
+Gunakan npm run dev hanya jika script dev tersedia. package Register terbaru tidak memiliki script dev. Jalankan npm test bila folder test dan script tersedia; keberadaan script saja tidak menjamin file test ikut tersalin.
+
+Verifikasi manual:
+1. Halaman Register terbuka melalui HTTP dan aset termuat.
+2. Password/konfirmasi yang berbeda ditolak.
+3. Akun uji berhasil dibuat; role Staff, status active, hash password tidak dikirim ke client.
+4. Username/email yang sama ditolak, termasuk variasi huruf besar/kecil.
+5. Login existing berhasil memakai akun tersebut; hak akses Staff tetap terbatas.
+6. Menu Dashboard lama tetap berfungsi.
+
+Contoh query pemeriksaan tanpa menampilkan password_hash:
+
+```sql
+SELECT u.id, u.username, u.status, r.name AS role
+FROM users u JOIN roles r ON r.id = u.role_id
+ORDER BY u.id DESC LIMIT 5;
+```
+
+Register langsung aktif bukan validasi nomor karyawan terhadap HR. Sesuaikan alur persetujuan jika diperlukan oleh kebijakan perusahaan.
+
+## 8. Persiapkan commit
+
+Gabungkan templates/gitignore-snippet.txt ke .gitignore existing. .gitignore tidak menghapus file yang sudah tracked. Periksa nama file yang akan dikirim dan diff secara lokal:
+
+```bash
+git status --short
+git diff --stat
+git ls-files '*.env*' '*node_modules*'
+```
+
+Jika .env atau node_modules sudah tracked, keluarkan path yang benar dari index (file lokal dipertahankan):
+
+```bash
+# Contoh; sesuaikan hanya untuk path yang memang tracked
+git rm --cached -- backend/.env
+git rm -r --cached -- backend/node_modules
+```
+
+Jika rahasia sudah pernah di-push, mengabaikan file sekarang tidak menghapus riwayat: ganti kredensial terdampak dan tangani riwayat secara terpisah. Skrip push memeriksa nama file berisiko pada snapshot saat ini, bukan seluruh isi/riwayat.
+
+Stage file yang telah direview, misalnya:
+
+```bash
+git add README.md .gitignore
+# Tambahkan path source/config contoh/SQL yang benar-benar Anda ubah
+git add backend/src/jasil-register frontend/register.html frontend/register.css frontend/register.js frontend/config.js
+# Jika dependency berubah:
+git add backend/package.json backend/package-lock.json
+git diff --cached --stat
+git diff --cached --check
+git commit -m "Integrate PT JASIL registration and migration documentation"
+```
+
+Contoh path harus disesuaikan. Hindari men-stage .env atau dump database. Selesaikan rebase aktif lebih dahulu; jangan membuat commit migrasi baru di tengah konflik.
+
+## 9. Main ke master (hanya jika masih diperlukan)
+
+Jika branch saat ini sudah master, lewati bagian ini. Jika Anda berada di main, working tree bersih, tidak ada operasi Git aktif, dan master lokal belum ada:
+
+```bash
+git branch --list main master
+git branch -m main master
+```
+
+Perintah -m akan menolak menimpa branch master yang sudah ada. Jika keduanya ada, bandingkan riwayat terlebih dahulu; jangan memakai -M untuk memaksa. Mengganti nama branch lokal tidak mengubah default branch GitHub dan tidak menghapus main remote. Setelah master berhasil di-push dan divalidasi, default branch dapat diubah pada pengaturan repository GitHub. Tidak perlu menghapus main untuk mengirim master.
+
+## 10. Push dan error fetch first
+
+Jalankan dari root repository dengan working tree bersih:
+
+```bash
+bash /c/path/K3-Node-Migration-Push/scripts/push-master.sh
+```
+
+Script memeriksa operasi Git aktif, penanda konflik, nama file sensitif, branch master, serta URL origin. Kemudian membuat backup branch lokal, fetch, rebase terhadap origin/master (jika ada), dan push -u. Script tidak otomatis commit/stash, tidak memakai --force, dan berhenti jika rebase konflik.
+
+Jika origin belum ada, tambahkan satu kali:
+
+```bash
+git remote add origin https://github.com/Falmines/dashboard-k3-system.git
+```
+
+Jika origin sudah ada tetapi salah, periksa lalu ubah hanya setelah memastikan tujuannya:
+
+```bash
+git remote get-url origin
+git remote set-url origin https://github.com/Falmines/dashboard-k3-system.git
+```
+
+Untuk origin SSH yang memang Anda gunakan, set K3_EXPECTED_ORIGIN sesuai URL SSH sebelum menjalankan helper. Jangan menyisipkan token ke URL. Gunakan autentikasi Git Credential Manager/browser atau kredensial GitHub yang sesuai; password akun biasa bukan pengganti token Git HTTPS.
+
+Jika konflik, selesaikan file lalu git add path dan git rebase --continue. Setelah selesai jalankan ulang helper. Jika remote berubah lagi sebelum push, penolakan tetap mungkin terjadi; ulangi fetch/rebase setelah memeriksa status.
+
+Jika riwayat lokal dan remote tidak berhubungan, helper berhenti. Jalur pemulihan yang paling mudah ditinjau: backup folder lokal, clone remote ke folder baru, salin hanya perubahan source yang diperlukan (tanpa .git, .env, node_modules), periksa diff, commit dan push dari clone baru. Jangan memakai --allow-unrelated-histories atau force push secara otomatis.
+
+Verifikasi akhir:
+
+```bash
+git fetch origin
+git rev-parse master
+git rev-parse origin/master
+git status
+```
+
+Dua hash harus sama sesaat setelah sinkronisasi. Push memindahkan source Git, bukan database PostgreSQL, file upload eksternal, atau proses Node yang sedang berjalan. Deployment/hosting adalah langkah terpisah.
+
+## 11. Pemulihan dan troubleshooting
+
+| Gejala | Tindakan |
+|---|---|
+| unknown switch m | Gunakan git commit -m untuk pesan; git push -u origin master untuk push |
+| fetch first / non-fast-forward | Fetch lalu rebase; selesaikan konflik sebelum push |
+| cannot rebase: unstaged changes | Review dan commit perubahan terlebih dahulu |
+| Cannot find module ./src/mount-register | Paket Register belum lengkap atau server mandiri menimpa server utama |
+| Cannot find module ../config/db | Periksa path dan nama file pool; jangan membuat pool kedua tanpa kebutuhan |
+| npm ERR missing script dev | Pakai npm start jika hanya start tersedia |
+| EADDRINUSE | Hentikan proses lama yang dikenal atau gunakan port berbeda |
+| 28P01 / password authentication failed | Periksa kredensial lokal dan konfigurasi PostgreSQL |
+| 23505 saat migrasi indeks | Precheck duplikat username/email; transaksi batal, koreksi data lalu ulangi |
+| 23514 status constraint | Periksa constraint aktual; Register menggunakan active, bukan Aktif |
+| CORS / Failed to fetch | Periksa origin frontend, alamat API, port, dan backend aktif |
+| 404 /api/health pada Register | Endpoint tersebut tidak didefinisikan oleh server Register mandiri |
+
+Backup branch menyimpan commit, bukan file untracked atau database. Jangan menjalankan reset --hard untuk membatalkan perubahan tanpa backup yang sesuai. Pemulihan database sebaiknya restore ke database baru dan mengalihkan koneksi setelah validasi, bukan menimpa database utama secara langsung.
+
+## 12. Referensi resmi
+
+- Git rebase: https://git-scm.com/docs/git-rebase
+- PostgreSQL pg_dump: https://www.postgresql.org/docs/18/app-pgdump.html
+- PostgreSQL pg_restore: https://www.postgresql.org/docs/current/app-pgrestore.html
+- Siklus rilis Node.js: https://nodejs.org/en/about/previous-releases
+
+Langkah di atas disesuaikan dengan file lampiran. Nomor port, lokasi folder, grant database, dan path pool harus mengikuti proyek yang benar-benar terpasang.

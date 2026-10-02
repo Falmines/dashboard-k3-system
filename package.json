@@ -1,0 +1,19 @@
+{
+  "name": "pt-jasil-register",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Modul registrasi PT. JASIL \u2014 K3 Safety",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "pg": "^8.23.1"
+  }
+}

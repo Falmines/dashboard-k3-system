@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>K3 Safety - Audit</title>
   <link rel="stylesheet" href="audit.css" />
+  <link rel="stylesheet" href="dashboard-login.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="icon" href="/favicon.ico">
 </head>
@@ -29,7 +30,7 @@
   <a href="insiden.html">
     <i class="fa-solid fa-helmet-safety"></i>
     <span>Insiden</span>
-    <small>12</small>
+    <small>0</small>
   </a>
 
   <a href="observasi.html">
@@ -65,7 +66,7 @@
   <a href="tindakan-korektif.html">
     <i class="fa-solid fa-circle-check"></i>
     <span>Tindakan Korektif</span>
-    <small class="orange">8</small>
+    <small class="orange">0</small>
   </a>
 
   <a href="pelaporan.html">
@@ -119,14 +120,14 @@
       <h1>Audit</h1>
       <p>Dashboard <i class="fa-solid fa-chevron-right"></i> Audit</p>
     </div>
-    <button><i class="fa-solid fa-plus"></i> Jadwalkan Audit</button>
+    <button id="add-audit-button" type="button"><i class="fa-solid fa-plus"></i> Jadwalkan Audit</button>
   </section>
 
   <section class="stats">
     <div class="stat">
       <div>
         <p>Total Audit</p>
-        <h2 class="blue">28</h2>
+        <h2 id="audit-stat-total" class="blue">0</h2>
         <span>Semua Audit</span>
       </div>
       <i class="fa-solid fa-file-lines icon blue-bg"></i>
@@ -135,8 +136,8 @@
     <div class="stat">
       <div>
         <p>Audit Selesai</p>
-        <h2 class="green">18</h2>
-        <span>64.3% dari total</span>
+        <h2 id="audit-stat-completed" class="green">0</h2>
+        <span>Data dari database</span>
       </div>
       <i class="fa-solid fa-check icon green-bg"></i>
     </div>
@@ -144,8 +145,8 @@
     <div class="stat">
       <div>
         <p>Audit Berjalan</p>
-        <h2 class="blue">6</h2>
-        <span>21.4% dari total</span>
+        <h2 id="audit-stat-running" class="blue">0</h2>
+        <span>Data dari database</span>
       </div>
       <i class="fa-solid fa-clock icon blue-bg"></i>
     </div>
@@ -153,17 +154,17 @@
     <div class="stat">
       <div>
         <p>Audit Direncanakan</p>
-        <h2 class="purple">4</h2>
-        <span>14.3% dari total</span>
+        <h2 id="audit-stat-planned" class="purple">0</h2>
+        <span>Data dari database</span>
       </div>
       <i class="fa-solid fa-calendar-days icon purple-bg"></i>
     </div>
 
     <div class="stat">
       <div>
-        <p>Temuan Open</p>
-        <h2 class="orange-text">32</h2>
-        <span>Perlu ditindaklanjuti</span>
+        <p>Audit dengan Temuan</p>
+        <h2 id="audit-stat-findings" class="orange-text">0</h2>
+        <span>Record audit dengan catatan temuan</span>
       </div>
       <i class="fa-solid fa-triangle-exclamation icon orange-bg"></i>
     </div>
@@ -173,15 +174,14 @@
 
     <div class="left">
       <div class="filter">
-        <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari audit...</div>
-        <button>Semua Jenis Audit <i class="fa-solid fa-chevron-down"></i></button>
-        <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
-        <button>Semua Lokasi <i class="fa-solid fa-chevron-down"></i></button>
-        <button>01/01/2024 - 15/05/2024 <i class="fa-regular fa-calendar"></i></button>
-        <button><i class="fa-solid fa-rotate-right"></i> Reset</button>
+        <label class="search" for="audit-search"><i class="fa-solid fa-magnifying-glass"></i><input id="audit-search" type="search" placeholder="Cari audit..."></label>
+        <select id="audit-type-filter" aria-label="Filter jenis audit"><option value="">Semua Jenis Audit</option></select>
+        <select id="audit-status-filter" aria-label="Filter status"><option value="">Semua Status</option></select>
+        <select id="audit-location-filter" aria-label="Filter lokasi"><option value="">Semua Lokasi</option></select>
+        <button id="audit-reset" type="button"><i class="fa-solid fa-rotate-right"></i> Reset</button>
       </div>
 
-      <p class="result">Menampilkan 1 - 10 dari 28 audit</p>
+      <p class="result" id="audit-table-info">Memuat data audit...</p>
 
       <div class="table-card">
         <table>
@@ -198,17 +198,8 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td>1</td><td>Audit Internal SMK3 Q2 2024</td><td>Internal</td><td>Plant Produksi</td><td>HSE Officer</td><td>10 Mei 2024</td><td><span class="badge done">Selesai</span></td><td>8</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>2</td><td>Audit ISO 45001:2018</td><td>Eksternal</td><td>Seluruh Area</td><td>Auditor Eksternal</td><td>2 Mei 2024</td><td><span class="badge done">Selesai</span></td><td>12</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>3</td><td>Audit Kepatuhan K3 Vendor</td><td>Internal</td><td>Area Workshop</td><td>HSE Officer</td><td>28 Apr 2024</td><td><span class="badge run">Berjalan</span></td><td>6</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>4</td><td>Audit APD & Peralatan</td><td>Internal</td><td>Plant Produksi</td><td>Safety Officer</td><td>25 Apr 2024</td><td><span class="badge run">Berjalan</span></td><td>4</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>5</td><td>Audit Fire Safety</td><td>Internal</td><td>Gudang Bahan</td><td>HSE Officer</td><td>20 Apr 2024</td><td><span class="badge done">Selesai</span></td><td>5</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>6</td><td>Audit Legal & Regulasi</td><td>Eksternal</td><td>Seluruh Area</td><td>Auditor Eksternal</td><td>15 Apr 2024</td><td><span class="badge done">Selesai</span></td><td>3</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>7</td><td>Audit Contractor Safety</td><td>Internal</td><td>Proyek Area A</td><td>Safety Officer</td><td>10 Apr 2024</td><td><span class="badge plan">Direncanakan</span></td><td>0</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>8</td><td>Audit Lingkungan Kerja</td><td>Internal</td><td>Office & Kantor</td><td>HSE Officer</td><td>5 Apr 2024</td><td><span class="badge plan">Direncanakan</span></td><td>0</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>9</td><td>Audit Ergonomi</td><td>Internal</td><td>Seluruh Area</td><td>HSE Officer</td><td>1 Apr 2024</td><td><span class="badge done">Selesai</span></td><td>2</td><td>👁 ⬇ ⋯</td></tr>
-            <tr><td>10</td><td>Audit Management Review</td><td>Internal</td><td>Seluruh Area</td><td>HSE Manager</td><td>20 Mar 2024</td><td><span class="badge done">Selesai</span></td><td>4</td><td>👁 ⬇ ⋯</td></tr>
+          <tbody id="audit-table-body">
+            <tr><td colspan="9">Memuat data audit...</td></tr>
           </tbody>
         </table>
       </div>
@@ -216,58 +207,64 @@
       <div class="bottom-grid">
         <div class="card">
           <h3>Temuan Terbaru</h3>
-          <div class="finding"><span class="risk high">High</span><p>Tidak tersedia prosedur LOTO di area mesin press<br><small>Audit Internal SMK3 Q2 2024</small></p><b>Open</b></div>
-          <div class="finding"><span class="risk med">Medium</span><p>APAR tidak terawat dengan baik<br><small>Audit Fire Safety</small></p><b>Open</b></div>
-          <div class="finding"><span class="risk med">Medium</span><p>Pekerja tidak menggunakan APD lengkap<br><small>Audit Contractor Safety</small></p><b class="progress">In Progress</b></div>
-          <div class="finding"><span class="risk low">Low</span><p>Signage jalur evakuasi kurang jelas<br><small>Audit Lingkungan Kerja</small></p><b class="closed">Closed</b></div>
-          <a>Lihat Semua Temuan →</a>
+          <div id="audit-recent-findings"></div>
         </div>
 
         <div class="card">
           <h3>Tindakan Korektif Terbaru</h3>
-          <div class="corrective"><span>1</span><p>Buat dan implementasi prosedur LOTO<br><small>Audit Internal SMK3 Q2 2024</small></p><b class="progress">In Progress</b></div>
-          <div class="corrective"><span>2</span><p>Perawatan dan inspeksi rutin APAR<br><small>Audit Fire Safety</small></p><b>Open</b></div>
-          <div class="corrective"><span>3</span><p>Sosialisasi penggunaan APD yang benar<br><small>Audit Contractor Safety</small></p><b>Open</b></div>
-          <div class="corrective"><span>4</span><p>Perbaikan dan penambahan signage<br><small>Audit Lingkungan Kerja</small></p><b class="closed">Closed</b></div>
-          <a>Lihat Semua Tindakan Korektif →</a>
+          <div id="audit-recent-actions"></div>
         </div>
       </div>
     </div>
 
     <aside class="right">
       <div class="side-card">
-        <h3>Ringkasan Temuan Audit</h3>
-        <div class="donut"><span>32<br><small>Total Temuan</small></span></div>
-        <p><b class="red-dot"></b> High Risk <strong>8 (25%)</strong></p>
-        <p><b class="yellow-dot"></b> Medium Risk <strong>14 (43.8%)</strong></p>
-        <p><b class="green-dot"></b> Low Risk <strong>10 (31.2%)</strong></p>
+        <h3>Audit Berdasarkan Status</h3>
+        <div class="donut" id="audit-status-chart"><span id="audit-status-total">0<small>Total Audit</small></span></div>
+        <div id="audit-status-legend"></div>
       </div>
 
       <div class="side-card">
-        <h3>Tingkat Kepatuhan Audit</h3>
-        <div class="gauge">76%<small>Tingkat Kepatuhan</small></div>
-        <p>Target <strong>90%</strong></p>
-        <p>Gap <strong class="red">-14%</strong></p>
+        <h3>Penyelesaian Audit</h3>
+        <div class="gauge" id="audit-completion-gauge">0%<small>Audit selesai</small></div>
+        <p id="audit-completion-summary">0 dari 0 audit selesai</p>
       </div>
 
       <div class="side-card">
         <h3>Jenis Audit</h3>
-        <div class="bar"><span style="width:64%"></span></div><p>Internal <strong>18 (64.3%)</strong></p>
-        <div class="bar bluebar"><span style="width:21%"></span></div><p>Eksternal <strong>6 (21.4%)</strong></p>
-        <div class="bar purplebar"><span style="width:14%"></span></div><p>Regulasi <strong>4 (14.3%)</strong></p>
+        <div id="audit-type-chart"></div>
       </div>
 
       <div class="side-card">
         <h3>Jadwal Audit Mendatang</h3>
-        <div class="schedule"><i class="fa-regular fa-calendar"></i><p>Audit Contractor Safety<br><small>20 Mei 2024 • 09:00 - 12:00</small></p></div>
-        <div class="schedule"><i class="fa-regular fa-calendar"></i><p>Audit Legal & Regulasi<br><small>25 Mei 2024 • 13:00 - 16:00</small></p></div>
-        <div class="schedule"><i class="fa-regular fa-calendar"></i><p>Audit Ergonomi<br><small>30 Mei 2024 • 09:00 - 12:00</small></p></div>
-        <a>Lihat Semua Jadwal Audit →</a>
+        <div id="audit-upcoming-list"></div>
       </div>
     </aside>
 
   </section>
 </main>
 
+  <div id="audit-modal" class="audit-modal" hidden>
+    <form id="audit-form" class="audit-form">
+      <div class="audit-form-head">
+        <h2>Jadwalkan Audit</h2>
+        <button id="close-audit-modal" type="button" aria-label="Tutup">&times;</button>
+      </div>
+      <label>Nama Audit<input name="name" required maxlength="150"></label>
+      <label>Jenis Audit<input name="type" required maxlength="80"></label>
+      <label>Lokasi / Area<input name="location" required maxlength="150"></label>
+      <label>Lead Auditor<input name="auditor" maxlength="120"></label>
+      <label>Tanggal Audit<input name="audit_date" type="date" required></label>
+      <label>Status<select name="status" required><option value="Direncanakan">Direncanakan</option><option value="Berjalan">Berjalan</option><option value="Selesai">Selesai</option></select></label>
+      <p id="audit-form-error" role="alert"></p>
+      <div class="audit-form-actions"><button id="cancel-audit-modal" type="button">Batal</button><button type="submit">Simpan</button></div>
+    </form>
+  </div>
+
+  <script type="module" src="audit-script.js"></script>
+  <script src="dashboard-login.js"></script>
+  <script src="crud-edit.js"></script>
+  <script src="topbar-live.js"></script>
+  <script src="sidebar-live.js"></script>
 </body>
 </html>

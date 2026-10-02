@@ -233,14 +233,18 @@ body{
   font-size:13px;
 }
 
-.icon{
+.stat > .icon{
   width:58px;
   height:58px;
+  min-width:58px;
+  flex-shrink:0;
   border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
   font-size:26px;
+  line-height:1;
+  text-align:center;
 }
 
 .blue{color:#2563eb;}
@@ -255,12 +259,13 @@ body{
 
 .filter{
   display:grid;
-  grid-template-columns:2fr repeat(5,1fr);
+  grid-template-columns:2fr repeat(4,1fr);
   gap:12px;
   margin-bottom:18px;
 }
 
 .filter button,
+.filter select,
 .search{
   height:44px;
   border:1px solid #e2e8f0;
@@ -272,12 +277,30 @@ body{
   justify-content:space-between;
   color:#334155;
   font-size:13px;
+  font-family:inherit;
+  min-width:0;
 }
 
 .search{
   justify-content:flex-start;
   gap:10px;
 }
+
+.search input{width:100%;border:0;outline:0;background:transparent;font:inherit;}
+.action button{border:0;background:transparent;color:#dc2626;cursor:pointer;font-weight:700;}
+.training-modal[hidden]{display:none;}
+.training-modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:20px;background:rgba(15,23,42,.5);}
+.training-form{width:min(650px,100%);display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:24px;border-radius:14px;background:white;box-shadow:0 20px 50px rgba(15,23,42,.2);}
+.training-form-head,.training-form p,.training-form-actions{grid-column:1 / -1;}
+.training-form-head{display:flex;justify-content:space-between;align-items:center;}
+.training-form-head button{border:0;background:transparent;font-size:26px;cursor:pointer;}
+.training-form label{display:grid;gap:7px;font-size:13px;font-weight:700;color:#334155;}
+.training-form input,.training-form select{padding:10px;border:1px solid #cbd5e1;border-radius:7px;font:inherit;}
+.training-form p{min-height:18px;color:#dc2626;font-size:13px;}
+.training-form-actions{display:flex;justify-content:flex-end;gap:10px;}
+.training-form-actions button{border:0;border-radius:7px;padding:10px 17px;background:#059669;color:white;cursor:pointer;font-weight:700;}
+.training-form-actions button:first-child{background:#e2e8f0;color:#334155;}
+@media(max-width:700px){.training-form{grid-template-columns:1fr;}}
 
 .layout{
   display:grid;
@@ -589,3 +612,12 @@ th,td{
     align-items:flex-start;
   }
 }
+.pagination select{padding:8px;border:1px solid #e2e8f0;border-radius:8px;background:white;color:#334155}
+.pagination-controls{display:flex;align-items:center;gap:8px}
+.pagination button:disabled{opacity:.45;cursor:not-allowed}
+.chart-dot{width:9px;height:9px;min-width:9px;border-radius:50%;display:inline-block;margin-right:8px}
+.chart-empty{color:#64748b;font-size:13px}
+.side-card #training-category-legend p{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px}
+.side-card #training-category-legend p span{display:flex;align-items:center;min-width:0}
+.side-card #training-category-legend .chart-dot{margin:0 8px 0 0}
+.bar-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

@@ -1,0 +1,13 @@
+# Gabungkan dengan .gitignore existing, jangan menimpa aturan lain.
+node_modules/
+.env
+.env.*
+.env(*
+!.env.example
+!.env.*.example
+*.log
+*.dump
+*.backup
+backups/
+*.pem
+*.key

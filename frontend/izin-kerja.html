@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K3 Safety - Izin Kerja</title>
   <link rel="stylesheet" href="izin-kerja.css">
+  <link rel="stylesheet" href="dashboard-login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="icon" href="/favicon.ico">
 </head>
@@ -12,7 +13,7 @@
 
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-icon"><i class="fa-solid fa-gear"></i></div>
+    <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
     <div>
       <h2>K3 SAFETY</h2>
       <p>Safety First, Always</p>
@@ -64,14 +65,14 @@
       <h1>Izin Kerja</h1>
       <p>Dashboard <i class="fa-solid fa-chevron-right"></i> Izin Kerja</p>
     </div>
-    <button><i class="fa-solid fa-plus"></i> Buat Izin Kerja</button>
+    <button id="add-permit-button" type="button"><i class="fa-solid fa-plus"></i> Buat Izin Kerja</button>
   </section>
 
   <section class="stats">
     <div class="stat">
       <div>
         <p>Total Izin Kerja</p>
-        <h2 class="blue">56</h2>
+        <h2 id="permit-stat-total" class="blue">0</h2>
         <span>Semua izin kerja</span>
       </div>
       <i class="fa-solid fa-clipboard-list icon blue-bg"></i>
@@ -80,7 +81,7 @@
     <div class="stat">
       <div>
         <p>Aktif</p>
-        <h2 class="green">18</h2>
+        <h2 id="permit-stat-active" class="green">0</h2>
         <span>Sedang berlangsung</span>
       </div>
       <i class="fa-solid fa-play icon green-bg"></i>
@@ -89,7 +90,7 @@
     <div class="stat">
       <div>
         <p>Menunggu Persetujuan</p>
-        <h2 class="orange-text">7</h2>
+        <h2 id="permit-stat-pending" class="orange-text">0</h2>
         <span>Perlu persetujuan</span>
       </div>
       <i class="fa-solid fa-clock icon orange-bg"></i>
@@ -98,7 +99,7 @@
     <div class="stat">
       <div>
         <p>Selesai</p>
-        <h2 class="green">24</h2>
+        <h2 id="permit-stat-completed" class="green">0</h2>
         <span>Telah selesai</span>
       </div>
       <i class="fa-solid fa-check icon green-bg"></i>
@@ -107,7 +108,7 @@
     <div class="stat">
       <div>
         <p>Ditolak / Dibatalkan</p>
-        <h2 class="red">7</h2>
+        <h2 id="permit-stat-rejected" class="red">0</h2>
         <span>Izin tidak disetujui</span>
       </div>
       <i class="fa-solid fa-xmark icon red-bg"></i>
@@ -115,7 +116,7 @@
   </section>
 
   <section class="filter">
-    <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari izin kerja...</div>
+    <label class="search" for="permit-search"><i class="fa-solid fa-magnifying-glass"></i><input id="permit-search" type="search" placeholder="Cari izin kerja..."></label>
     <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
     <button>Semua Jenis Pekerjaan <i class="fa-solid fa-chevron-down"></i></button>
     <button>Semua Lokasi <i class="fa-solid fa-chevron-down"></i></button>
@@ -146,18 +147,7 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td>1</td><td>IK-2024-056</td><td>Hot Work</td><td>Area Produksi</td><td>Budi Santoso</td><td>15 Mei 2024<br>08:00</td><td>15 Mei 2024<br>17:00</td><td><span class="status aktif">Aktif</span></td><td>👁 ⋯</td></tr>
-            <tr><td>2</td><td>IK-2024-055</td><td>Electrical Work</td><td>Panel Listrik</td><td>Andi Wijaya</td><td>15 Mei 2024<br>09:00</td><td>15 Mei 2024<br>16:00</td><td><span class="status menunggu">Menunggu</span></td><td>👁 ⋯</td></tr>
-            <tr><td>3</td><td>IK-2024-054</td><td>Confined Space</td><td>Tangki 01</td><td>Siti Aisyah</td><td>14 Mei 2024<br>08:00</td><td>14 Mei 2024<br>18:00</td><td><span class="status aktif">Aktif</span></td><td>👁 ⋯</td></tr>
-            <tr><td>4</td><td>IK-2024-053</td><td>Working at Height</td><td>Proyek Area A</td><td>Rudi Hermawan</td><td>14 Mei 2024<br>07:30</td><td>14 Mei 2024<br>17:30</td><td><span class="status aktif">Aktif</span></td><td>👁 ⋯</td></tr>
-            <tr><td>5</td><td>IK-2024-052</td><td>Excavation Work</td><td>Area Pipa Bawah Tanah</td><td>Dewi Lestari</td><td>13 Mei 2024<br>08:30</td><td>13 Mei 2024<br>17:00</td><td><span class="status selesai">Selesai</span></td><td>👁 ⋯</td></tr>
-            <tr><td>6</td><td>IK-2024-051</td><td>Hot Work</td><td>Area Maintenance</td><td>Agus Setiawan</td><td>13 Mei 2024<br>09:00</td><td>13 Mei 2024<br>15:00</td><td><span class="status selesai">Selesai</span></td><td>👁 ⋯</td></tr>
-            <tr><td>7</td><td>IK-2024-050</td><td>Electrical Work</td><td>Ruang MCC</td><td>Nina Karlina</td><td>12 Mei 2024<br>08:00</td><td>12 Mei 2024<br>16:00</td><td><span class="status ditolak">Ditolak</span></td><td>👁 ⋯</td></tr>
-            <tr><td>8</td><td>IK-2024-049</td><td>Confined Space</td><td>Silo Bahan Baku</td><td>Fajar Nugroho</td><td>12 Mei 2024<br>08:00</td><td>12 Mei 2024<br>18:00</td><td><span class="status selesai">Selesai</span></td><td>👁 ⋯</td></tr>
-            <tr><td>9</td><td>IK-2024-048</td><td>Working at Height</td><td>Struktur Baja</td><td>Eko Prasetyo</td><td>11 Mei 2024<br>07:30</td><td>11 Mei 2024<br>17:30</td><td><span class="status aktif">Aktif</span></td><td>👁 ⋯</td></tr>
-            <tr><td>10</td><td>IK-2024-047</td><td>Excavation Work</td><td>Drainase Area A</td><td>Maya Putri</td><td>10 Mei 2024<br>08:30</td><td>10 Mei 2024<br>16:30</td><td><span class="status batal">Dibatalkan</span></td><td>👁 ⋯</td></tr>
-          </tbody>
+          <tbody id="permit-table-body"><tr><td colspan="9">Memuat data izin kerja...</td></tr></tbody>
         </table>
 
         <div class="pagination">
@@ -180,21 +170,17 @@
     <aside class="right">
       <div class="side-card">
         <h3>Izin Kerja Berdasarkan Status</h3>
-        <div class="donut"><span>56<small>Total</small></span></div>
-        <p><b class="green-dot"></b> Aktif <strong>18 (32.1%)</strong></p>
-        <p><b class="yellow-dot"></b> Menunggu <strong>7 (12.5%)</strong></p>
-        <p><b class="blue-dot"></b> Selesai <strong>24 (42.9%)</strong></p>
-        <p><b class="red-dot"></b> Ditolak <strong>4 (7.1%)</strong></p>
-        <p><b class="gray-dot"></b> Dibatalkan <strong>3 (5.4%)</strong></p>
+        <div class="donut"><span id="permit-summary-total">0<small>Total</small></span></div>
+        <p><b class="green-dot"></b> Aktif <strong id="permit-summary-active">0</strong></p>
+        <p><b class="yellow-dot"></b> Menunggu <strong id="permit-summary-pending">0</strong></p>
+        <p><b class="blue-dot"></b> Selesai <strong id="permit-summary-completed">0</strong></p>
+        <p><b class="red-dot"></b> Ditolak <strong id="permit-summary-rejected">0</strong></p>
+        <p><b class="gray-dot"></b> Dibatalkan <strong id="permit-summary-cancelled">0</strong></p>
       </div>
 
       <div class="side-card">
         <h3>Izin Kerja Berdasarkan Jenis Pekerjaan</h3>
-        <div class="bar-row"><span>Hot Work</span><div><b style="width:100%"></b></div><strong>18</strong></div>
-        <div class="bar-row"><span>Electrical Work</span><div><b style="width:70%"></b></div><strong>12</strong></div>
-        <div class="bar-row"><span>Confined Space</span><div><b style="width:55%"></b></div><strong>9</strong></div>
-        <div class="bar-row"><span>Working at Height</span><div><b style="width:55%"></b></div><strong>9</strong></div>
-        <div class="bar-row"><span>Excavation Work</span><div><b style="width:45%"></b></div><strong>8</strong></div>
+        <div id="permit-type-summary"><p>Memuat distribusi...</p></div>
       </div>
 
       <div class="side-card">
@@ -235,5 +221,24 @@
 
 </main>
 
+  <div id="permit-modal" class="permit-modal" hidden>
+    <form id="permit-form" class="permit-form">
+      <div class="permit-form-head"><h2>Buat Izin Kerja</h2><button id="close-permit-modal" type="button" aria-label="Tutup">&times;</button></div>
+      <label>Jenis Pekerjaan<input name="work_type" required maxlength="100"></label>
+      <label>Lokasi<input name="location" required maxlength="150"></label>
+      <label>Pemohon<input name="applicant" required maxlength="120"></label>
+      <label>Tanggal Mulai<input name="start_date" type="datetime-local" required></label>
+      <label>Tanggal Selesai<input name="end_date" type="datetime-local" required></label>
+      <label>Status<select name="status" required><option value="Menunggu">Menunggu</option><option value="Aktif">Aktif</option><option value="Selesai">Selesai</option><option value="Ditolak">Ditolak</option><option value="Dibatalkan">Dibatalkan</option></select></label>
+      <p id="permit-form-error" role="alert"></p>
+      <div class="permit-form-actions"><button id="cancel-permit-modal" type="button">Batal</button><button type="submit">Simpan</button></div>
+    </form>
+  </div>
+
+  <script src="permit-script.js"></script>
+  <script src="dashboard-login.js"></script>
+  <script src="crud-edit.js"></script>
+  <script src="topbar-live.js"></script>
+  <script src="sidebar-live.js"></script>
 </body>
 </html>

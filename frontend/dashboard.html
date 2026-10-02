@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Dashboard | K3 Safety
+    </title>
+
+    <link rel="stylesheet" href="dashboard-login.css">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #061b35,
+                    #003b38
+                );
+
+            color: white;
+
+            padding:
+                20px 30px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+        }
+
+        .container {
+
+            padding: 30px;
+        }
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 5px 25px
+                rgba(0,0,0,.06);
+
+            max-width: 600px;
+        }
+
+        .logout {
+
+            border: none;
+
+            background: #dc2626;
+
+            color: white;
+
+            padding:
+                10px 18px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+        }
+
+        .user-info {
+
+            line-height: 1.8;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div>
+
+        <strong>
+            K3 Safety System
+        </strong>
+
+    </div>
+
+
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        Logout
+    </button>
+
+    <button class="profile" type="button" aria-expanded="false" aria-controls="loginPopup">
+        👨‍💼 <b>Admin K3</b>
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <div class="card">
+
+        <h1>
+            Dashboard
+        </h1>
+
+        <p>
+            Selamat datang di
+            K3 Safety Management System.
+        </p>
+
+
+        <div
+            class="user-info"
+            id="userInfo"
+        ></div>
+
+    </div>
+
+</main>
+
+
+<script src="auth.js"></script>
+
+
+<script>
+
+    // Proteksi halaman
+
+    if (requireLogin()) {
+
+        const user =
+            getUser();
+
+        if (user) {
+
+            document.getElementById(
+                "userInfo"
+            ).innerHTML = `
+
+                <strong>
+                    Nama:
+                </strong>
+                ${user.name}
+
+                <br>
+
+                <strong>
+                    Username:
+                </strong>
+                ${user.username}
+
+                <br>
+
+                <strong>
+                    Email:
+                </strong>
+                ${user.email}
+
+                <br>
+
+                <strong>
+                    Department:
+                </strong>
+                ${user.department}
+
+                <br>
+
+                <strong>
+                    Jabatan:
+                </strong>
+                ${user.position}
+
+                <br>
+
+                <strong>
+                    Role:
+                </strong>
+                ${user.role}
+
+                <br>
+
+                <strong>
+                    Status:
+                </strong>
+                ${user.status}
+
+            `;
+
+        }
+
+    }
+
+</script>
+
+<script src="dashboard-login.js"></script>
+<script src="topbar-live.js"></script>
+<script src="sidebar-live.js"></script>
+
+
+</body>
+
+</html>

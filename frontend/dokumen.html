@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K3 Safety - Dokumen</title>
   <link rel="stylesheet" href="dokumen.css">
+  <link rel="stylesheet" href="dashboard-login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
    <link rel="icon" href="/favicon.ico">
 </head>
@@ -12,7 +13,7 @@
 
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-icon"><i class="fa-solid fa-gear"></i></div>
+    <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
     <div>
       <h2>K3 SAFETY</h2>
       <p>Safety First, Always</p>
@@ -29,7 +30,7 @@
   <a href="insiden.html">
     <i class="fa-solid fa-helmet-safety"></i>
     <span>Insiden</span>
-    <small>12</small>
+    <small>0</small>
   </a>
 
   <a href="observasi.html">
@@ -65,7 +66,7 @@
   <a href="tindakan-korektif.html">
     <i class="fa-solid fa-circle-check"></i>
     <span>Tindakan Korektif</span>
-    <small class="orange">8</small>
+    <small class="orange">0</small>
   </a>
 
   <a href="pelaporan.html">
@@ -119,14 +120,14 @@
       <h1>Dokumen</h1>
       <p>Dashboard <i class="fa-solid fa-chevron-right"></i> Dokumen</p>
     </div>
-    <button class="upload-btn"><i class="fa-solid fa-plus"></i> Upload Dokumen</button>
+    <button id="add-document-button" class="upload-btn" type="button"><i class="fa-solid fa-plus"></i> Tambah Dokumen</button>
   </section>
 
   <section class="stats">
     <div class="stat">
       <div>
         <p>Total Dokumen</p>
-        <h2 class="blue">128</h2>
+        <h2 id="document-stat-total" class="blue">0</h2>
         <small>Semua dokumen</small>
       </div>
       <i class="fa-solid fa-file-lines blue-bg"></i>
@@ -135,7 +136,7 @@
     <div class="stat">
       <div>
         <p>Dokumen Aktif</p>
-        <h2 class="green">98</h2>
+        <h2 id="document-stat-active" class="green">0</h2>
         <small>Sedang berlaku</small>
       </div>
       <i class="fa-solid fa-file-shield green-bg"></i>
@@ -144,8 +145,8 @@
     <div class="stat">
       <div>
         <p>Perlu Review</p>
-        <h2 class="yellow">18</h2>
-        <small>Akan expired / review</small>
+        <h2 id="document-stat-review" class="yellow">0</h2>
+        <small>Status review</small>
       </div>
       <i class="fa-solid fa-clock yellow-bg"></i>
     </div>
@@ -153,7 +154,7 @@
     <div class="stat">
       <div>
         <p>Kadaluarsa</p>
-        <h2 class="red">12</h2>
+        <h2 id="document-stat-expired" class="red">0</h2>
         <small>Dokumen expired</small>
       </div>
       <i class="fa-solid fa-file-circle-xmark red-bg"></i>
@@ -164,14 +165,14 @@
 
     <div class="left-content">
       <div class="filters">
-        <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari dokumen...</div>
-        <button>Semua Kategori <i class="fa-solid fa-chevron-down"></i></button>
-        <button>Semua Tipe <i class="fa-solid fa-chevron-down"></i></button>
-        <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
-        <button><i class="fa-solid fa-rotate-right"></i> Reset</button>
+        <label class="search" for="document-search"><i class="fa-solid fa-magnifying-glass"></i><input id="document-search" type="search" placeholder="Cari dokumen..."></label>
+        <select id="document-category-filter" aria-label="Filter kategori"><option value="">Semua Kategori</option></select>
+        <select id="document-type-filter" aria-label="Filter tipe"><option value="">Semua Tipe</option></select>
+        <select id="document-status-filter" aria-label="Filter status"><option value="">Semua Status</option></select>
+        <button id="document-reset" type="button"><i class="fa-solid fa-rotate-right"></i> Reset</button>
       </div>
 
-      <p class="table-info">Menampilkan 1 - 10 dari 128 dokumen</p>
+      <p id="document-table-info" class="table-info">Memuat data dokumen...</p>
 
       <div class="table-card">
         <table>
@@ -186,77 +187,18 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td><b>Kebijakan K3 Perusahaan</b><br><small>Kebijakan Keselamatan dan Kesehatan Kerja</small></td>
-              <td><span class="tag">Kebijakan</span></td>
-              <td>PDF</td>
-              <td>2.1</td>
-              <td><span class="status aktif">Aktif</span></td>
-              <td>12 Mei 2024<br><small>Admin K3</small></td>
-              <td class="action">⬇ 👁 ⋯</td>
-            </tr>
-            <tr>
-              <td><b>SOP Izin Kerja (Permit to Work)</b><br><small>Prosedur Izin Kerja Berisiko</small></td>
-              <td><span class="tag">SOP</span></td>
-              <td>DOCX</td>
-              <td>1.3</td>
-              <td><span class="status aktif">Aktif</span></td>
-              <td>10 Mei 2024<br><small>Admin K3</small></td>
-              <td class="action">⬇ 👁 ⋯</td>
-            </tr>
-            <tr>
-              <td><b>HIRADC Produksi</b><br><small>Identifikasi Bahaya dan Penilaian Risiko</small></td>
-              <td><span class="tag">HIRADC</span></td>
-              <td>PDF</td>
-              <td>3.0</td>
-              <td><span class="status aktif">Aktif</span></td>
-              <td>8 Mei 2024<br><small>HSE Officer</small></td>
-              <td class="action">⬇ 👁 ⋯</td>
-            </tr>
-            <tr>
-              <td><b>Form Inspeksi Harian</b><br><small>Checklist Inspeksi Area Kerja</small></td>
-              <td><span class="tag">Form</span></td>
-              <td>XLSX</td>
-              <td>1.5</td>
-              <td><span class="status aktif">Aktif</span></td>
-              <td>6 Mei 2024<br><small>HSE Officer</small></td>
-              <td class="action">⬇ 👁 ⋯</td>
-            </tr>
-            <tr>
-              <td><b>JSA Pekerjaan Las</b><br><small>Job Safety Analysis Pekerjaan Las</small></td>
-              <td><span class="tag">JSA</span></td>
-              <td>PDF</td>
-              <td>1.2</td>
-              <td><span class="status review">Review</span></td>
-              <td>5 Mei 2024<br><small>Supervisor</small></td>
-              <td class="action">⬇ 👁 ⋯</td>
-            </tr>
-            <tr>
-              <td><b>SOP Penanganan Keadaan Darurat</b><br><small>Prosedur Tanggap Darurat</small></td>
-              <td><span class="tag">SOP</span></td>
-              <td>DOCX</td>
-              <td>1.1</td>
-              <td><span class="status expired">Expired</span></td>
-              <td>28 Apr 2024<br><small>Admin K3</small></td>
-              <td class="action">⬇ 👁 ⋯</td>
-            </tr>
-          </tbody>
+          <tbody id="document-table-body"><tr><td colspan="7">Memuat data dokumen...</td></tr></tbody>
         </table>
       </div>
 
       <div class="pagination">
-        <span>Tampilkan</span>
-        <button>10</button>
+        <label for="document-page-size">Tampilkan</label>
+        <select id="document-page-size" aria-label="Jumlah dokumen per halaman"><option>10</option><option>25</option><option>50</option></select>
         <span>per halaman</span>
-        <div>
-          <button>&lt;</button>
-          <button class="page-active">1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>...</button>
-          <button>13</button>
-          <button>&gt;</button>
+        <div class="pagination-controls">
+          <button id="document-page-prev" type="button" aria-label="Halaman sebelumnya">&lt;</button>
+          <span id="document-page-info">1 / 1</span>
+          <button id="document-page-next" type="button" aria-label="Halaman berikutnya">&gt;</button>
         </div>
       </div>
     </div>
@@ -264,31 +206,13 @@
     <div class="right-content">
       <div class="side-card">
         <h3>Kategori Dokumen</h3>
-        <p>Kebijakan <b>8</b></p>
-        <p>SOP <b>24</b></p>
-        <p>HIRADC <b>12</b></p>
-        <p>JSA <b>18</b></p>
-        <p>Form <b>26</b></p>
-        <p>Audit <b>10</b></p>
-        <p>Panduan <b>8</b></p>
-        <p>Sertifikat <b>6</b></p>
-        <p>Laporan <b>16</b></p>
-        <button>Lihat Semua Kategori</button>
+        <div id="document-category-chart"></div>
       </div>
 
       <div class="side-card">
-        <h3>Penyimpanan</h3>
-        <div class="storage">
-          <div class="circle">68%<small>Terpakai</small></div>
-          <div>
-            <p>Total<br><b>10 GB</b></p>
-          </div>
-        </div>
-        <div class="storage-info">
-          <p><span class="dot green-dot"></span> Terpakai <b>6.8 GB</b></p>
-          <p><span class="dot gray-dot"></span> Tersedia <b>3.2 GB</b></p>
-        </div>
-        <button>Kelola Penyimpanan</button>
+        <h3>Status Dokumen</h3>
+        <div class="circle" id="document-status-chart"><span id="document-status-total">0<small>Total</small></span></div>
+        <div id="document-status-legend"></div>
       </div>
     </div>
 
@@ -296,5 +220,24 @@
 
 </main>
 
+<div id="document-modal" class="document-modal" hidden>
+  <form id="document-form" class="document-form">
+    <div class="document-form-head"><h2>Tambah Dokumen</h2><button id="close-document-modal" type="button" aria-label="Tutup">&times;</button></div>
+    <label>Nama Dokumen<input name="name" required maxlength="180"></label>
+    <label>Deskripsi<input name="description" maxlength="250"></label>
+    <label>Kategori<input name="category" required maxlength="80"></label>
+    <label>Tipe File<input name="file_type" placeholder="PDF, DOCX, XLSX" maxlength="20"></label>
+    <label>Versi<input name="version" maxlength="20"></label>
+    <label>Status<select name="status" required><option value="Aktif">Aktif</option><option value="Review">Review</option><option value="Expired">Expired</option></select></label>
+    <p id="document-form-error" role="alert"></p>
+    <div class="document-form-actions"><button id="cancel-document-modal" type="button">Batal</button><button type="submit">Simpan</button></div>
+  </form>
+</div>
+
+<script type="module" src="document-script.js"></script>
+<script src="dashboard-login.js"></script>
+<script src="crud-edit.js"></script>
+<script src="topbar-live.js"></script>
+<script src="sidebar-live.js"></script>
 </body>
 </html>

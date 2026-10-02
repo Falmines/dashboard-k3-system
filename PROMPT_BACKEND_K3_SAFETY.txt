@@ -1,0 +1,369 @@
+PROMPT PEMBUATAN BACKEND — DASHBOARD K3 SAFETY
+
+Buatkan backend lengkap dan siap dijalankan untuk aplikasi "DASHBOARD K3 SAFETY" menggunakan:
+
+TECH STACK
+- Node.js
+- Express.js
+- PostgreSQL
+- bcrypt untuk hashing password
+- JWT untuk authentication
+- dotenv
+- cors
+- pg (node-postgres)
+- nodemon untuk development
+
+Gunakan arsitektur backend yang rapi, modular, mudah dikembangkan, dan cocok dihubungkan dengan frontend HTML/CSS/JavaScript atau React.js.
+
+==================================================
+1. STRUKTUR PROJECT
+==================================================
+
+backend/
+├── src/
+│   ├── config/
+│   │   └── database.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── userController.js
+│   │   ├── incidentController.js
+│   │   ├── observationController.js
+│   │   ├── nearMissController.js
+│   │   └── dashboardController.js
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   ├── roleMiddleware.js
+│   │   └── errorMiddleware.js
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── userRoutes.js
+│   │   ├── incidentRoutes.js
+│   │   ├── observationRoutes.js
+│   │   ├── nearMissRoutes.js
+│   │   └── dashboardRoutes.js
+│   ├── services/
+│   │   └── passwordService.js
+│   └── app.js
+├── scripts/
+│   └── hash-password.js
+├── server.js
+├── package.json
+├── .env.example
+└── .gitignore
+
+==================================================
+2. DATABASE POSTGRESQL
+==================================================
+
+Gunakan PostgreSQL dengan konfigurasi .env:
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=k3_safety
+DB_USER=postgres
+DB_PASSWORD=
+PORT=5000
+JWT_SECRET=
+
+Gunakan connection pool dari package "pg".
+
+==================================================
+3. AUTHENTICATION
+==================================================
+
+Buat authentication menggunakan JWT.
+
+Endpoint:
+POST /api/auth/login
+
+Request:
+{
+  "username": "admin",
+  "password": "Admin123!"
+}
+
+Proses login:
+1. Cari user berdasarkan username.
+2. Pastikan status user = active.
+3. Ambil password_hash dari PostgreSQL.
+4. Bandingkan password menggunakan bcrypt.compare(password, user.password_hash).
+5. Jangan membandingkan plain-text password.
+6. Jika benar, generate JWT.
+7. Jangan pernah mengembalikan password_hash ke frontend.
+
+Response sukses:
+{
+  "success": true,
+  "message": "Login berhasil",
+  "token": "...",
+  "user": {
+    "id": 1,
+    "name": "Administrator",
+    "username": "admin",
+    "email": "admin@example.com",
+    "role_id": 1
+  }
+}
+
+==================================================
+4. USERS
+==================================================
+
+Sesuaikan backend dengan tabel users PostgreSQL:
+- id
+- role_id
+- employee_number
+- name
+- username
+- email
+- password_hash
+- phone
+- department
+- position
+- photo_url
+- status
+- created_at
+- updated_at
+
+API:
+GET    /api/users
+GET    /api/users/:id
+POST   /api/users
+PUT    /api/users/:id
+DELETE /api/users/:id
+
+POST user menerima:
+{
+  "role_id": 1,
+  "employee_number": "ADM001",
+  "name": "Administrator",
+  "username": "admin",
+  "email": "admin@example.com",
+  "password": "Admin123!",
+  "phone": null,
+  "department": "IT",
+  "position": "Administrator",
+  "photo_url": null,
+  "status": "active"
+}
+
+Sebelum INSERT:
+const passwordHash = await bcrypt.hash(password, 10);
+
+Simpan passwordHash ke password_hash. Jangan simpan password asli.
+
+==================================================
+5. ROLE & AUTHORIZATION
+==================================================
+
+Asumsikan:
+role_id = 1 -> Admin
+role_id = 2 -> User/Petugas
+
+Admin:
+- CRUD user
+- CRUD data K3
+- melihat dashboard
+- melihat seluruh laporan
+
+User/Petugas:
+- login
+- input laporan
+- melihat data yang diperbolehkan
+
+Buat middleware:
+- authenticateToken
+- requireAdmin
+
+==================================================
+6. INCIDENT
+==================================================
+
+CRUD:
+GET    /api/incidents
+GET    /api/incidents/:id
+POST   /api/incidents
+PUT    /api/incidents/:id
+DELETE /api/incidents/:id
+
+Data minimal:
+title, description, location, incident_date, severity, status,
+reported_by, created_at, updated_at
+
+==================================================
+7. OBSERVATION
+==================================================
+
+CRUD:
+GET    /api/observations
+GET    /api/observations/:id
+POST   /api/observations
+PUT    /api/observations/:id
+DELETE /api/observations/:id
+
+==================================================
+8. NEAR MISS
+==================================================
+
+CRUD:
+GET    /api/near-miss
+GET    /api/near-miss/:id
+POST   /api/near-miss
+PUT    /api/near-miss/:id
+DELETE /api/near-miss/:id
+
+==================================================
+9. DASHBOARD
+==================================================
+
+GET /api/dashboard/summary
+
+Response:
+{
+  "success": true,
+  "data": {
+    "total_incidents": 0,
+    "total_observations": 0,
+    "total_near_miss": 0,
+    "total_completed": 0
+  }
+}
+
+GET /api/dashboard/monthly
+
+Return data Januari-Desember yang siap digunakan Chart.js/Recharts.
+
+Contoh:
+[
+  {
+    "month": "Januari",
+    "incidents": 10,
+    "observations": 15,
+    "near_miss": 5,
+    "completed": 8
+  }
+]
+
+Semua data harus berasal dari PostgreSQL, bukan hardcode.
+
+==================================================
+10. SECURITY
+==================================================
+
+Implementasikan:
+- bcrypt saltRounds = 10
+- JWT authentication
+- Authorization Bearer Token
+- parameterized PostgreSQL queries
+- validasi request
+- username UNIQUE
+- email UNIQUE
+- jangan return password_hash
+- jangan log password
+- environment variables
+- centralized error handling
+
+Contoh query aman:
+pool.query(
+  "SELECT * FROM users WHERE username = $1",
+  [username]
+);
+
+Jangan membuat SQL dengan string concatenation dari input user.
+
+==================================================
+11. PASSWORD HASH GENERATOR
+==================================================
+
+Tambahkan scripts/hash-password.js:
+
+const bcrypt = require("bcrypt");
+
+const password = "";
+
+async function hashPassword() {
+  if (!password) {
+    console.log("Password belum diisi.");
+    return;
+  }
+
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    console.log("Hash:", hash);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+hashPassword();
+
+Tambahkan package.json:
+
+"scripts": {
+  "start": "node server.js",
+  "dev": "nodemon server.js",
+  "hash": "node scripts/hash-password.js"
+}
+
+Perintah:
+npm install
+npm run dev
+npm run hash
+
+==================================================
+12. RESPONSE FORMAT
+==================================================
+
+SUCCESS:
+{
+  "success": true,
+  "message": "Data berhasil disimpan",
+  "data": {}
+}
+
+ERROR:
+{
+  "success": false,
+  "message": "Terjadi kesalahan"
+}
+
+Gunakan status:
+200 OK
+201 Created
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+409 Conflict
+500 Internal Server Error
+
+==================================================
+13. HASIL AKHIR
+==================================================
+
+Berikan FULL SOURCE CODE, bukan pseudocode.
+
+Tampilkan:
+1. Struktur folder
+2. package.json
+3. .env.example
+4. database.js
+5. server.js
+6. app.js
+7. seluruh middleware
+8. seluruh controller
+9. seluruh route
+10. service bcrypt
+11. SQL PostgreSQL jika tabel tambahan diperlukan
+12. contoh akun Admin
+13. contoh request login
+14. cara menjalankan backend
+15. cara testing menggunakan Postman
+
+Pastikan semua import/require, nama file, endpoint, dan dependency konsisten sehingga project dapat langsung dijalankan dengan:
+
+npm install
+npm run dev
+
+Jangan mengubah struktur tabel users yang sudah ada tanpa alasan.
+Jika membutuhkan tabel tambahan, gunakan foreign key yang sesuai.

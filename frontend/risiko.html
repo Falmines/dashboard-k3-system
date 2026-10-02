@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K3 Safety - Manajemen Risiko</title>
   <link rel="stylesheet" href="risiko.css">
+  <link rel="stylesheet" href="dashboard-login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="icon" href="/favicon.ico">
 </head>
@@ -12,7 +13,7 @@
 
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-icon"><i class="fa-solid fa-gear"></i></div>
+    <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
     <div>
       <h2>K3 SAFETY</h2>
       <p>Safety First, Always</p>
@@ -28,7 +29,7 @@
     <a href="apd.html"><i class="fa-solid fa-toolbox"></i><span>APD & Peralatan</span></a>
     <a href="dokumen.html"><i class="fa-solid fa-file-lines"></i><span>Dokumen</span></a>
     <a href="audit.html"><i class="fa-solid fa-clipboard-list"></i><span>Audit</span></a>
-    <a href="tindakan.html"><i class="fa-solid fa-circle-check"></i><span>Tindakan Korektif</span><small class="orange">8</small></a>
+    <a href="tindakan-korektif.html"><i class="fa-solid fa-circle-check"></i><span>Tindakan Korektif</span><small class="orange">8</small></a>
     <a href="pelaporan.html"><i class="fa-solid fa-chart-pie"></i><span>Pelaporan</span></a>
     <a href="risiko.html" class="active"><i class="fa-solid fa-triangle-exclamation"></i><span>Manajemen Risiko</span></a>
     <a href="pengguna.html"><i class="fa-solid fa-users"></i><span>Pengguna</span></a>
@@ -66,7 +67,7 @@
     </div>
 
     <div class="title-actions">
-      <button class="btn-primary"><i class="fa-solid fa-plus"></i> Tambah Risiko Baru</button>
+      <button id="add-risk-button" class="btn-primary" type="button"><i class="fa-solid fa-plus"></i> Tambah Risiko Baru</button>
       <button class="btn-light"><i class="fa-solid fa-download"></i> Unduh Laporan</button>
     </div>
   </section>
@@ -75,7 +76,7 @@
     <div class="stat">
       <div>
         <p>Total Risiko</p>
-        <h2 class="blue">56</h2>
+        <h2 id="risk-stat-total" class="blue">0</h2>
         <span>Semua risiko teridentifikasi</span>
       </div>
       <i class="fa-solid fa-shield-halved icon blue-bg"></i>
@@ -84,7 +85,7 @@
     <div class="stat">
       <div>
         <p>Risiko Ekstrem</p>
-        <h2 class="red">6</h2>
+        <h2 id="risk-stat-extreme" class="red">0</h2>
         <span>10.7% dari total</span>
       </div>
       <i class="fa-solid fa-triangle-exclamation icon red-bg"></i>
@@ -93,7 +94,7 @@
     <div class="stat">
       <div>
         <p>Risiko Tinggi</p>
-        <h2 class="orange-text">14</h2>
+        <h2 id="risk-stat-high" class="orange-text">0</h2>
         <span>25.0% dari total</span>
       </div>
       <i class="fa-solid fa-chevron-up icon orange-bg"></i>
@@ -102,7 +103,7 @@
     <div class="stat">
       <div>
         <p>Risiko Sedang</p>
-        <h2 class="yellow">22</h2>
+        <h2 id="risk-stat-medium" class="yellow">0</h2>
         <span>39.3% dari total</span>
       </div>
       <i class="fa-solid fa-minus icon yellow-bg"></i>
@@ -111,7 +112,7 @@
     <div class="stat">
       <div>
         <p>Risiko Rendah</p>
-        <h2 class="green">14</h2>
+        <h2 id="risk-stat-low" class="green">0</h2>
         <span>25.0% dari total</span>
       </div>
       <i class="fa-solid fa-circle-check icon green-bg"></i>
@@ -119,7 +120,7 @@
   </section>
 
   <section class="filter">
-    <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari risiko...</div>
+    <label class="search" for="risk-search"><i class="fa-solid fa-magnifying-glass"></i><input id="risk-search" type="search" placeholder="Cari risiko..."></label>
     <button>Semua Kategori <i class="fa-solid fa-chevron-down"></i></button>
     <button>Semua Lokasi <i class="fa-solid fa-chevron-down"></i></button>
     <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
@@ -203,13 +204,7 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td>1</td><td>RISK-2024-056</td><td>Kebakaran di area produksi</td><td>Keselamatan</td><td>Area Produksi</td><td>5</td><td>4</td><td><span class="badge extreme-b">Ekstrem</span></td><td><span class="status aktif">Aktif</span></td><td>Budi Santoso</td><td>👁 ⋯</td></tr>
-            <tr><td>2</td><td>RISK-2024-055</td><td>Ledakan akibat kebocoran gas</td><td>Keselamatan</td><td>Area Utilitas</td><td>4</td><td>4</td><td><span class="badge extreme-b">Ekstrem</span></td><td><span class="status aktif">Aktif</span></td><td>Dewi Lestari</td><td>👁 ⋯</td></tr>
-            <tr><td>3</td><td>RISK-2024-054</td><td>Terpeleset akibat lantai licin</td><td>Keselamatan</td><td>Area Produksi</td><td>4</td><td>3</td><td><span class="badge high-b">Tinggi</span></td><td><span class="status aktif">Aktif</span></td><td>Andi Wijaya</td><td>👁 ⋯</td></tr>
-            <tr><td>4</td><td>RISK-2024-053</td><td>Sengatan listrik saat perbaikan mesin</td><td>Keselamatan</td><td>Area Workshop</td><td>3</td><td>4</td><td><span class="badge high-b">Tinggi</span></td><td><span class="status aktif">Aktif</span></td><td>Rudi Hermawan</td><td>👁 ⋯</td></tr>
-            <tr><td>5</td><td>RISK-2024-052</td><td>Tertimpa material pada saat angkat</td><td>Keselamatan</td><td>Area Proyek</td><td>3</td><td>3</td><td><span class="badge high-b">Tinggi</span></td><td><span class="status aktif">Aktif</span></td><td>Siti Aisyah</td><td>👁 ⋯</td></tr>
-          </tbody>
+          <tbody id="risk-table-body"><tr><td colspan="11">Memuat data risiko...</td></tr></tbody>
         </table>
 
         <div class="pagination">
@@ -265,5 +260,25 @@
 
 </main>
 
+  <div id="risk-modal" class="risk-modal" hidden>
+    <form id="risk-form" class="risk-form">
+      <div class="risk-form-head"><h2>Tambah Risiko Baru</h2><button id="close-risk-modal" type="button" aria-label="Tutup">&times;</button></div>
+      <label>Deskripsi Risiko<textarea name="description" rows="3" required maxlength="500"></textarea></label>
+      <label>Kategori<input name="category" required maxlength="100"></label>
+      <label>Lokasi<input name="location" required maxlength="150"></label>
+      <label>Likelihood<select name="likelihood" required><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
+      <label>Impact<select name="impact" required><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
+      <label>Status<select name="status" required><option value="Aktif">Aktif</option><option value="Mitigasi">Mitigasi</option><option value="Ditutup">Ditutup</option></select></label>
+      <label>Pemilik Risiko<input name="owner" required maxlength="120"></label>
+      <p id="risk-form-error" role="alert"></p>
+      <div class="risk-form-actions"><button id="cancel-risk-modal" type="button">Batal</button><button type="submit">Simpan</button></div>
+    </form>
+  </div>
+
+  <script src="risk-script.js"></script>
+  <script src="dashboard-login.js"></script>
+  <script src="crud-edit.js"></script>
+  <script src="topbar-live.js"></script>
+  <script src="sidebar-live.js"></script>
 </body>
 </html>

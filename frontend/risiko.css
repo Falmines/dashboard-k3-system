@@ -76,9 +76,16 @@ body{background:#f8fafc;color:#0f172a;display:flex}
 .stat p{font-weight:700;font-size:14px}
 .stat h2{font-size:32px;margin:7px 0}
 .stat span{color:#475569;font-size:13px}
-.icon{
+.stat > .icon{
   width:58px;height:58px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;font-size:24px;
+  min-width:58px;flex-shrink:0;
+  display:grid !important;place-items:center !important;
+  font-size:24px;line-height:1;text-align:center;
+}
+
+.stat > .icon::before{
+  display:block;width:1em;text-align:center;
+  justify-self:center;align-self:center;
 }
 
 .blue{color:#2563eb}.red{color:#ef4444}.green{color:#059669}
@@ -99,6 +106,21 @@ body{background:#f8fafc;color:#0f172a;display:flex}
   color:#334155;font-size:13px;
 }
 .search{justify-content:flex-start;gap:10px}
+.search input{width:100%;border:0;outline:0;background:transparent;font:inherit;}
+.action button{border:0;background:transparent;color:#dc2626;cursor:pointer;font-weight:700;}
+.risk-modal[hidden]{display:none;}
+.risk-modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:20px;background:rgba(15,23,42,.5);}
+.risk-form{width:min(650px,100%);display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:24px;border-radius:14px;background:white;box-shadow:0 20px 50px rgba(15,23,42,.2);}
+.risk-form-head,.risk-form p,.risk-form-actions{grid-column:1 / -1;}
+.risk-form-head{display:flex;justify-content:space-between;align-items:center;}
+.risk-form-head button{border:0;background:transparent;font-size:26px;cursor:pointer;}
+.risk-form label{display:grid;gap:7px;font-size:13px;font-weight:700;color:#334155;}
+.risk-form input,.risk-form select,.risk-form textarea{padding:10px;border:1px solid #cbd5e1;border-radius:7px;font:inherit;}
+.risk-form p{min-height:18px;color:#dc2626;font-size:13px;}
+.risk-form-actions{display:flex;justify-content:flex-end;gap:10px;}
+.risk-form-actions button{border:0;border-radius:7px;padding:10px 17px;background:#059669;color:white;cursor:pointer;font-weight:700;}
+.risk-form-actions button:first-child{background:#e2e8f0;color:#334155;}
+@media(max-width:700px){.risk-form{grid-template-columns:1fr;}}
 
 .layout{display:grid;grid-template-columns:1fr 410px;gap:24px}
 .matrix-card,.table-card,.side-card{

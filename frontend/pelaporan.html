@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K3 Safety - Pelaporan</title>
   <link rel="stylesheet" href="pelaporan.css">
+  <link rel="stylesheet" href="dashboard-login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="icon" href="/favicon.ico">
 </head>
@@ -12,7 +13,7 @@
 
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-icon"><i class="fa-solid fa-gear"></i></div>
+    <div class="brand-icon"><i class="fa-solid fa-shield-halved"></i></div>
     <div>
       <h2>K3 SAFETY</h2>
       <p>Safety First, Always</p>
@@ -66,7 +67,7 @@
     </div>
 
     <div class="title-actions">
-      <button class="btn-primary"><i class="fa-solid fa-plus"></i> Buat Laporan Baru</button>
+      <button id="add-report-button" class="btn-primary" type="button"><i class="fa-solid fa-plus"></i> Buat Laporan Baru</button>
       <button class="btn-light"><i class="fa-solid fa-download"></i> Unduh Laporan</button>
     </div>
   </section>
@@ -75,7 +76,7 @@
     <div class="stat">
       <div>
         <p>Total Laporan</p>
-        <h2 class="blue">156</h2>
+        <h2 id="report-stat-total" class="blue">0</h2>
         <span>Semua laporan</span>
       </div>
       <i class="fa-solid fa-file-lines icon blue-bg"></i>
@@ -84,7 +85,7 @@
     <div class="stat">
       <div>
         <p>Insiden</p>
-        <h2 class="red">42</h2>
+        <h2 id="report-stat-incident" class="red">0</h2>
         <span>26.9% dari total</span>
       </div>
       <i class="fa-solid fa-triangle-exclamation icon red-bg"></i>
@@ -93,7 +94,7 @@
     <div class="stat">
       <div>
         <p>Observasi</p>
-        <h2 class="green">58</h2>
+        <h2 id="report-stat-observation" class="green">0</h2>
         <span>37.2% dari total</span>
       </div>
       <i class="fa-solid fa-eye icon green-bg"></i>
@@ -102,7 +103,7 @@
     <div class="stat">
       <div>
         <p>Near Miss</p>
-        <h2 class="orange-text">36</h2>
+        <h2 id="report-stat-near-miss" class="orange-text">0</h2>
         <span>23.1% dari total</span>
       </div>
       <i class="fa-solid fa-person-running icon orange-bg"></i>
@@ -111,7 +112,7 @@
     <div class="stat">
       <div>
         <p>Selesai Ditindaklanjuti</p>
-        <h2 class="purple">98</h2>
+        <h2 id="report-stat-completed" class="purple">0</h2>
         <span>62.8% dari total</span>
       </div>
       <i class="fa-solid fa-circle-check icon purple-bg"></i>
@@ -119,7 +120,7 @@
   </section>
 
   <section class="filter">
-    <div class="search"><i class="fa-solid fa-magnifying-glass"></i> Cari laporan...</div>
+    <label class="search" for="report-search"><i class="fa-solid fa-magnifying-glass"></i><input id="report-search" type="search" placeholder="Cari laporan..."></label>
     <button>Semua Jenis Laporan <i class="fa-solid fa-chevron-down"></i></button>
     <button>Semua Lokasi <i class="fa-solid fa-chevron-down"></i></button>
     <button>Semua Status <i class="fa-solid fa-chevron-down"></i></button>
@@ -145,17 +146,57 @@
           </div>
         </div>
 
-        <div class="fake-chart">
-          <div class="chart-tooltip">
-            <b>Mei</b>
-            <p><span class="red-dot"></span> Insiden 14</p>
-            <p><span class="green-dot"></span> Observasi 18</p>
-            <p><span class="yellow-dot"></span> Near Miss 10</p>
-            <p><span class="purple-dot"></span> Selesai 16</p>
-          </div>
-        </div>
-      </div>
+        <!-- <div class="fake-chart" id="report-trend-chart">
 
+  <div class="chart-grid">
+    <div class="chart-y-label">20</div>
+    <div class="chart-y-label">15</div>
+    <div class="chart-y-label">10</div>
+    <div class="chart-y-label">5</div>
+    <div class="chart-y-label">0</div>
+  </div>
+
+  <div class="chart-content">
+
+    <div class="chart-loading" id="report-trend-loading">
+      Memuat data tren...
+    </div> -->
+
+    <svg
+      id="report-trend-svg"
+      class="report-trend-svg"
+      viewBox="0 0 900 320"
+      preserveAspectRatio="none"
+      aria-label="Tren laporan"
+    ></svg>
+
+    <div id="report-trend-tooltip" class="chart-tooltip" hidden>
+      <b id="trend-tooltip-month">-</b>
+
+      <p>
+        <span class="red-dot"></span>
+        Insiden <strong id="trend-tooltip-incident">0</strong>
+      </p>
+
+      <p>
+        <span class="green-dot"></span>
+        Observasi <strong id="trend-tooltip-observation">0</strong>
+      </p>
+
+      <p>
+        <span class="yellow-dot"></span>
+        Near Miss <strong id="trend-tooltip-near-miss">0</strong>
+      </p>
+
+      <p>
+        <span class="purple-dot"></span>
+        Selesai <strong id="trend-tooltip-completed">0</strong>
+      </p>
+    </div>
+
+    <div id="report-trend-labels" class="chart-labels"></div>
+
+  </div>
       <div class="table-card">
         <div class="card-head">
           <h3>Daftar Laporan Terbaru</h3>
@@ -175,67 +216,7 @@
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>RPT-2024-156</td>
-              <td><span class="type red-type"><i class="fa-solid fa-triangle-exclamation"></i> Insiden</span></td>
-              <td>Karyawan terpeleset di area produksi</td>
-              <td>Area Produksi</td>
-              <td>Budi Santoso</td>
-              <td>15 Mei 2024</td>
-              <td><span class="status proses">Dalam Proses</span></td>
-              <td>👁 ⋯</td>
-            </tr>
-
-            <tr>
-              <td>2</td>
-              <td>RPT-2024-155</td>
-              <td><span class="type green-type"><i class="fa-solid fa-eye"></i> Observasi</span></td>
-              <td>Rambu keselamatan kurang jelas</td>
-              <td>Area Gudang</td>
-              <td>Siti Aisyah</td>
-              <td>15 Mei 2024</td>
-              <td><span class="status selesai">Selesai</span></td>
-              <td>👁 ⋯</td>
-            </tr>
-
-            <tr>
-              <td>3</td>
-              <td>RPT-2024-154</td>
-              <td><span class="type orange-type"><i class="fa-solid fa-person-running"></i> Near Miss</span></td>
-              <td>Hampir tertimpa material</td>
-              <td>Area Proyek</td>
-              <td>Andi Wijaya</td>
-              <td>14 Mei 2024</td>
-              <td><span class="status belum">Belum Ditindaklanjuti</span></td>
-              <td>👁 ⋯</td>
-            </tr>
-
-            <tr>
-              <td>4</td>
-              <td>RPT-2024-153</td>
-              <td><span class="type red-type"><i class="fa-solid fa-triangle-exclamation"></i> Insiden</span></td>
-              <td>Kebocoran pipa pada sambungan</td>
-              <td>Area Utilitas</td>
-              <td>Dewi Lestari</td>
-              <td>14 Mei 2024</td>
-              <td><span class="status proses">Dalam Proses</span></td>
-              <td>👁 ⋯</td>
-            </tr>
-
-            <tr>
-              <td>5</td>
-              <td>RPT-2024-152</td>
-              <td><span class="type green-type"><i class="fa-solid fa-eye"></i> Observasi</span></td>
-              <td>Penggunaan APD tidak lengkap</td>
-              <td>Area Workshop</td>
-              <td>Rudi Hermawan</td>
-              <td>13 Mei 2024</td>
-              <td><span class="status selesai">Selesai</span></td>
-              <td>👁 ⋯</td>
-            </tr>
-          </tbody>
+          <tbody id="report-table-body"><tr><td colspan="9">Memuat data laporan...</td></tr></tbody>
         </table>
 
         <div class="pagination">
@@ -255,60 +236,111 @@
       </div>
 
     </div>
+</div>
+
+
 
     <aside class="right">
 
-      <div class="side-card">
-        <h3>Ringkasan Status Laporan</h3>
-        <div class="donut"><span>156<small>Total</small></span></div>
-        <p><b class="green-dot"></b> Selesai <strong>98 (62.8%)</strong></p>
-        <p><b class="yellow-dot"></b> Dalam Proses <strong>34 (21.8%)</strong></p>
-        <p><b class="red-dot"></b> Belum Ditindaklanjuti <strong>20 (12.8%)</strong></p>
-        <p><b class="purple-dot"></b> Ditolak <strong>4 (2.6%)</strong></p>
+  <!-- RINGKASAN STATUS -->
+  <div class="side-card">
+    <h3>Ringkasan Status Laporan</h3>
+
+    <div class="donut" id="report-status-donut">
+      <span>
+        <strong id="report-donut-total">0</strong>
+        <small>Total</small>
+      </span>
+    </div>
+
+    <div id="report-status-summary">
+      <p>
+        <span>
+          <b class="green-dot"></b>
+          Selesai
+        </span>
+        <strong>0 (0%)</strong>
+      </p>
+
+      <p>
+        <span>
+          <b class="yellow-dot"></b>
+          Dalam Proses
+        </span>
+        <strong>0 (0%)</strong>
+      </p>
+
+      <p>
+        <span>
+          <b class="red-dot"></b>
+          Belum Ditindaklanjuti
+        </span>
+        <strong>0 (0%)</strong>
+      </p>
+
+      <p>
+        <span>
+          <b class="purple-dot"></b>
+          Ditolak
+        </span>
+        <strong>0 (0%)</strong>
+      </p>
+    </div>
+  </div>
+
+
+  <!-- LAPORAN TERBARU -->
+  <div class="side-card">
+    <h3>Laporan Terbaru</h3>
+
+    <div id="latest-report-list">
+      <div class="loading-side">
+        Memuat laporan terbaru...
       </div>
+    </div>
 
-      <div class="side-card">
-        <h3>Laporan Terbaru</h3>
+    <a href="pelaporan.html" class="view-all">
+      Lihat Semua Laporan →
+    </a>
+  </div>
 
-        <div class="latest-row">
-          <i class="fa-solid fa-triangle-exclamation danger"></i>
-          <p><b>RPT-2024-156</b><br><small>Karyawan terpeleset di area produksi</small></p>
-          <span>15 Mei 2024</span>
-          <em>Dalam Proses</em>
-        </div>
 
-        <div class="latest-row">
-          <i class="fa-solid fa-eye success"></i>
-          <p><b>RPT-2024-155</b><br><small>Rambu keselamatan kurang jelas</small></p>
-          <span>15 Mei 2024</span>
-          <em class="done">Selesai</em>
-        </div>
+  <!-- DISTRIBUSI KATEGORI -->
+  <div class="side-card">
+    <h3>Distribusi Laporan Berdasarkan Kategori</h3>
 
-        <div class="latest-row">
-          <i class="fa-solid fa-person-running warning"></i>
-          <p><b>RPT-2024-154</b><br><small>Hampir tertimpa material</small></p>
-          <span>14 Mei 2024</span>
-          <em class="bad">Belum</em>
-        </div>
-
-        <a class="view-all">Lihat Semua Laporan →</a>
+    <div id="report-category-distribution">
+      <div class="loading-side">
+        Memuat distribusi kategori...
       </div>
+    </div>
+  </div>
 
-      <div class="side-card">
-        <h3>Distribusi Laporan Berdasarkan Kategori</h3>
+</aside>
 
-        <div class="bar-row"><span>Keselamatan Kerja</span><div><b style="width:100%"></b></div><strong>68</strong></div>
-        <div class="bar-row"><span>Lingkungan Kerja</span><div><b style="width:50%"></b></div><strong>34</strong></div>
-        <div class="bar-row"><span>Fasilitas & Peralatan</span><div><b style="width:41%"></b></div><strong>28</strong></div>
-        <div class="bar-row"><span>Perilaku / Human Error</span><div><b style="width:26%"></b></div><strong>18</strong></div>
-        <div class="bar-row"><span>Lainnya</span><div><b style="width:12%"></b></div><strong>8</strong></div>
-      </div>
-
-    </aside>
 
   </section>
 
 </main>
 
+  <div id="report-modal" class="report-modal" hidden>
+    <form id="report-form" class="report-form">
+      <div class="report-form-head"><h2>Buat Laporan Baru</h2><button id="close-report-modal" type="button" aria-label="Tutup">&times;</button></div>
+      <label>Jenis Laporan<select name="type" required><option value="Insiden">Insiden</option><option value="Observasi">Observasi</option><option value="Near Miss">Near Miss</option></select></label>
+      <label>Judul / Deskripsi<textarea name="description" rows="3" required maxlength="500"></textarea></label>
+      <label>Lokasi<input name="location" required maxlength="150"></label>
+      <label>Pelapor<input name="reporter" required maxlength="120"></label>
+      <label>Tanggal<input name="report_date" type="datetime-local" required></label>
+      <label>Status<select name="status" required><option value="Dalam Proses">Dalam Proses</option><option value="Selesai">Selesai</option><option value="Belum Ditindaklanjuti">Belum Ditindaklanjuti</option><option value="Ditolak">Ditolak</option></select></label>
+      <p id="report-form-error" role="alert"></p>
+      <div class="report-form-actions"><button id="cancel-report-modal" type="button">Batal</button><button type="submit">Simpan</button></div>
+    </form>
+  </div>
+
+  <script src="report-script.js"></script>
+  <script src="dashboard-login.js"></script>
+  <script src="crud-edit.js"></script>
+  <script src="topbar-live.js"></script>
+  <script src="sidebar-live.js"></script>
 </body>
 </html>

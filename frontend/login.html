@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Login | K3 Safety System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #061b35 0%,
+                    #003b38 100%
+                );
+
+            padding: 20px;
+        }
+
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 430px;
+        }
+
+
+        .login-card {
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.30);
+        }
+
+
+        .logo {
+
+            width: 78px;
+            height: 78px;
+
+            margin:
+                0 auto 20px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00a878,
+                    #007f68
+                );
+
+            color: white;
+
+            font-size: 34px;
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            color: #0f172a;
+
+            font-size: 27px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 30px;
+        }
+
+
+        .message {
+
+            display: none;
+
+            padding: 13px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 10px;
+
+            background: #fef2f2;
+
+            border:
+                1px solid #fecaca;
+
+            color: #b91c1c;
+
+            font-size: 14px;
+        }
+
+
+        .message.show {
+            display: block;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        label {
+
+            display: block;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .input-wrapper > i {
+
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #64748b;
+
+            pointer-events: none;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 52px;
+
+            border:
+                1px solid #dbe3ec;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            padding:
+                0 45px;
+
+            color: #0f172a;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+
+        input:focus {
+
+            border-color: #00a878;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0, 168, 120, 0.12);
+        }
+
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #64748b;
+
+            cursor: pointer;
+        }
+
+
+        .login-button {
+
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00a878,
+                    #007f68
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .login-button:hover {
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 168, 120, 0.25);
+        }
+
+
+        .login-button:disabled {
+
+            opacity: 0.7;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        @media(max-width:480px) {
+
+            .login-card {
+                padding: 30px 22px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+    <div class="login-card">
+
+
+        <div class="logo">
+
+            <i
+                class="fa-solid fa-helmet-safety"
+            ></i>
+
+        </div>
+
+
+        <h1>
+            K3 Safety System
+        </h1>
+
+
+        <p class="subtitle">
+
+            Sistem Informasi
+            Keselamatan & Kesehatan Kerja
+
+        </p>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <form id="loginForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    Username / Email
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i
+                        class="fa-solid fa-user"
+                    ></i>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Masukkan username atau email"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i
+                        class="fa-solid fa-lock"
+                    ></i>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Masukkan password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <span
+                        class="password-toggle"
+                        id="togglePassword"
+                    >
+
+                        <i
+                            class="fa-solid fa-eye"
+                        ></i>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="loginButton"
+                class="login-button"
+            >
+
+                <i
+                    class="fa-solid fa-right-to-bracket"
+                ></i>
+
+                &nbsp;
+
+                Masuk ke Sistem
+
+            </button>
+
+
+        </form>
+
+
+        <div class="footer">
+
+            K3 Safety Management System
+
+            <br>
+
+            © 2026 All Rights Reserved
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="login.js"></script>
+
+</body>
+
+</html>
